@@ -31,7 +31,7 @@ public class DatabaseConnection {
     public static boolean createdDB(Connection conn){
         
          try {
-             String sql = "CREATE TABLE user(id nvarchar(8) not null, ho nvarchar(50) not null, ten nvarchar(25) not null, sdt nvarchar(10) not null, username nvarchar(50) not null, password nvarchar(12) not null, admin bit not null, sotienconlai DECIMAL not null, primary key(id))";
+             String sql = "CREATE TABLE user(id nvarchar(8) not null, ho nvarchar(50) not null, ten nvarchar(25) not null, sdt nvarchar(10) not null, username nvarchar(50) not null, password nvarchar(12) not null, admin bit not null, primary key(id))";
              
              Statement stat = conn.createStatement();
              stat.executeUpdate(sql);

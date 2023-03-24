@@ -18,7 +18,6 @@ public class User {
     private String username;
     private String password;
     private boolean admin;
-    private double sotienconlai;
     
     {
         id = UUID.randomUUID().toString();
@@ -28,14 +27,13 @@ public class User {
         
     }
 
-    public User(String ho, String ten, String sdt, String username, String password, boolean admin, double sotienconlai) {
+    public User(String ho, String ten, String sdt, String username, String password, boolean admin) {
         this.ho = ho;
         this.ten = ten;
         this.sdt = sdt;
         this.username = username;
         this.password = password;
         this.admin = admin;
-        this.sotienconlai = sotienconlai;
     }
     
     public User(String id, String ho, String ten, String sdt, String username, String password, boolean admin, double sotienconlai) {
@@ -46,7 +44,6 @@ public class User {
         this.username = username;
         this.password = password;
         this.admin = admin;
-        this.sotienconlai = sotienconlai;
     }
 
     public String getId() {
@@ -103,13 +100,5 @@ public class User {
 
     public void setAdmin(boolean admin) {
         this.admin = admin;
-    }
-
-    public double getSotienconlai() {
-        return sotienconlai;
-    }
-
-    public void setSotienconlai(double sotienconlai) {
-        this.sotienconlai = sotienconlai;
     }
 }
