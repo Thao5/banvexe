@@ -17,6 +17,8 @@ public class Ve {
     private String soghe;
     private Double giave;
     private LocalDateTime ngayin;
+    private String khachhang;
+    private String sdt;
     private String user_id;
     private String chuyenxe_id;
     
@@ -27,19 +29,23 @@ public class Ve {
     public Ve() {
     }
 
-    public Ve(String soghe, Double giave, LocalDateTime ngayin, String user_id, String chuyenxe_id) {
+    public Ve(String soghe, Double giave, LocalDateTime ngayin, String khachhang, String sdt, String user_id, String chuyenxe_id) {
         this.soghe = soghe;
         this.giave = giave;
         this.ngayin = ngayin;
+        this.khachhang = khachhang;
+        this.sdt = sdt;
         this.user_id = user_id;
         this.chuyenxe_id = chuyenxe_id;
     }
     
-    public Ve(String id, String soghe, Double giave, LocalDateTime ngayin, String user_id, String chuyenxe_id) {
+    public Ve(String id, String soghe, Double giave, LocalDateTime ngayin , String khachhang, String sdt, String user_id, String chuyenxe_id) {
         this.id = id;
         this.soghe = soghe;
         this.giave = giave;
         this.ngayin = ngayin;
+        this.khachhang = khachhang;
+        this.sdt = sdt;
         this.user_id = user_id;
         this.chuyenxe_id = chuyenxe_id;
     }
@@ -90,6 +96,34 @@ public class Ve {
 
     public void setChuyenxe_id(String chuyenxe_id) {
         this.chuyenxe_id = chuyenxe_id;
+    }
+
+    /**
+     * @return the khachhang
+     */
+    public String getKhachhang() {
+        return khachhang;
+    }
+
+    /**
+     * @param khachhang the khachhang to set
+     */
+    public void setKhachhang(String khachhang) {
+        this.khachhang = khachhang;
+    }
+
+    /**
+     * @return the sdt
+     */
+    public String getSdt() {
+        return sdt;
+    }
+
+    /**
+     * @param sdt the sdt to set
+     */
+    public void setSdt(String sdt) {
+        this.sdt = sdt;
     }
     
     

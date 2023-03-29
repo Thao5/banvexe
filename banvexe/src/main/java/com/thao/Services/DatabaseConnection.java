@@ -31,42 +31,42 @@ public class DatabaseConnection {
     public static boolean createdDB(Connection conn){
         
          try {
-             String sql = "CREATE TABLE user(id nvarchar(8) not null, ho nvarchar(50) not null, ten nvarchar(25) not null, sdt nvarchar(10) not null, username nvarchar(50) not null, password nvarchar(12) not null, admin bit not null, primary key(id))";
+             String sql = "CREATE TABLE user(id nvarchar(100) not null, ho nvarchar(50) not null, ten nvarchar(25) not null, sdt nvarchar(10) not null, username nvarchar(50) not null, password nvarchar(12) not null, admin bit not null, primary key(id))";
              
              Statement stat = conn.createStatement();
              stat.executeUpdate(sql);
              
-             sql = "CREATE TABLE benxe(id nvarchar(8) not null, name nvarchar(50) not null, address nvarchar(50) not null, primary key(id))";
+             sql = "CREATE TABLE benxe(id nvarchar(100) not null, name nvarchar(50) not null, address nvarchar(50) not null, primary key(id))";
              
              stat = conn.createStatement();
              stat.executeUpdate(sql);
              
-             sql = "CREATE TABLE tuyenduong(id nvarchar(8) not null, diemdi nvarchar(50) not null, diemden nvarchar(50) not null, primary key(id))";
+             sql = "CREATE TABLE tuyenduong(id nvarchar(100) not null, diemdi nvarchar(50) not null, diemden nvarchar(50) not null, primary key(id))";
              
              stat = conn.createStatement();
              stat.executeUpdate(sql);
              
-             sql = "CREATE TABLE xekhach(id nvarchar(8) not null, sochongoi INT not null, bienso nvarchar(50) not null, primary key(id))";
+             sql = "CREATE TABLE xekhach(id nvarchar(100) not null, sochongoi INT not null, bienso nvarchar(50) not null, primary key(id))";
              
              stat = conn.createStatement();
              stat.executeUpdate(sql);
              
-             sql = "CREATE TABLE chuyenxe(id nvarchar(8) not null, name nvarchar(50) not null, ngaykhoihanh DATETIME not null, giave DECIMAL not null, xekhach_id nvarchar(8) not null, benxedi_id nvarchar(8) not null, benxeden_id nvarchar(8) not null, primary key(id), foreign key(xekhach_id) references xekhach(id), foreign key(benxedi_id) references benxe(id), foreign key(benxeden_id) references benxe(id))";
+             sql = "CREATE TABLE chuyenxe(id nvarchar(100) not null, name nvarchar(50) not null, ngaykhoihanh DATETIME not null, giave DECIMAL not null, xekhach_id nvarchar(100) not null, benxedi_id nvarchar(100) not null, benxeden_id nvarchar(100) not null, primary key(id), foreign key(xekhach_id) references xekhach(id), foreign key(benxedi_id) references benxe(id), foreign key(benxeden_id) references benxe(id))";
              
              stat = conn.createStatement();
              stat.executeUpdate(sql);
              
-             sql = "CREATE TABLE chuyenxethuoctuyenduong(id nvarchar(8) not null, chuyenxe_id nvarchar(8) not null, tuyenduong_id nvarchar(8) not null, primary key(id), foreign key(chuyenxe_id) references chuyenxe(id), foreign key(tuyenduong_id) references tuyenduong(id))";
+             sql = "CREATE TABLE chuyenxethuoctuyenduong(id nvarchar(100) not null, chuyenxe_id nvarchar(100) not null, tuyenduong_id nvarchar(100) not null, primary key(id), foreign key(chuyenxe_id) references chuyenxe(id), foreign key(tuyenduong_id) references tuyenduong(id))";
              
              stat = conn.createStatement();
              stat.executeUpdate(sql);
              
-             sql = "CREATE TABLE ve(id nvarchar(8) not null, soghe nvarchar(25) not null, giave DECIMAL not null, ngayin DATETIME not null, user_id nvarchar(8) not null, chuyenxe_id nvarchar(8) not null, primary key(id), foreign key(user_id) references user(id), foreign key(chuyenxe_id) references chuyenxe(id))";
+             sql = "CREATE TABLE ve(id nvarchar(100) not null, soghe nvarchar(25) not null, giave DECIMAL not null, ngayin DATETIME not null, khachhang nvarchar(100), sdt nvarchar(10) , user_id nvarchar(100) not null, chuyenxe_id nvarchar(100) not null, primary key(id), foreign key(user_id) references user(id), foreign key(chuyenxe_id) references chuyenxe(id))";
              
              stat = conn.createStatement();
              stat.executeUpdate(sql);
              
-             sql = "CREATE TABLE ghe(id nvarchar(8) not null, name nvarchar(50) not null, trangthai BIT not null, ve_id nvarchar(8), xekhach_id nvarchar(8) not null, primary key(id), foreign key(xekhach_id) references xekhach(id), foreign key(ve_id) references ve(id))";
+             sql = "CREATE TABLE ghe(id nvarchar(100) not null, name nvarchar(50) not null, trangthai BIT not null, ve_id nvarchar(100), xekhach_id nvarchar(100) not null, primary key(id), foreign key(xekhach_id) references xekhach(id), foreign key(ve_id) references ve(id))";
              
              stat = conn.createStatement();
              stat.executeUpdate(sql);
@@ -77,7 +77,7 @@ public class DatabaseConnection {
          return true;
     }
     
-    public static void main(String[] args) throws SQLException {
-        createdDB(getDBConnection());
-    }
+//    public static void main(String[] args) throws SQLException {
+//        createdDB(getDBConnection());
+//    }
 }
