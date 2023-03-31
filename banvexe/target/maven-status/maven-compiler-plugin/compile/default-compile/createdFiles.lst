@@ -4,7 +4,9 @@ com\thao\Services\ChuyenXeServices.class
 com\thao\pojo\ChuyenXeThuocTuyenDuong.class
 com\thao\banvexe\PrimaryController.class
 com\thao\pojo\BenXe.class
+com\thao\banvexe\FXMLThongTinUserController.class
 com\thao\pojo\Ghe.class
+com\thao\banvexe\FXMLDoiVeController.class
 module-info.class
 com\thao\pojo\User.class
 com\thao\banvexe\App.class

@@ -4,13 +4,16 @@
  */
 package com.thao.Services;
 
+import com.thao.pojo.ChuyenXe;
 import com.thao.pojo.Ve;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -81,5 +84,75 @@ public class VeServices {
             Logger.getLogger(VeServices.class.getName()).log(Level.SEVERE, null, ex);
         }
         return 0;
+    }
+    
+    public boolean kiemTraVeDat(Ve ve, ChuyenXe cx){
+        if(ve.getNgayin().isBefore(cx.getNgaykhoihanh())){
+            int ss = (int)Duration.between(ve.getNgayin(), cx.getNgaykhoihanh()).toMinutes();
+            return ss >= 60;
+        }
+        return false;
+    }
+    
+    public boolean kiemTraVeMua(Ve ve, ChuyenXe cx){
+        if(ve.getNgayin().isBefore(cx.getNgaykhoihanh())){
+            int ss = (int)Duration.between(ve.getNgayin(), cx.getNgaykhoihanh()).toMinutes();
+            return ss >= 5;
+        }
+        return false;
+    }
+    
+    public boolean kiemTraVeDat30(Ve ve, ChuyenXe cx){
+        if(ve.getNgayin().isBefore(cx.getNgaykhoihanh())){
+            int ss = (int)Duration.between(ve.getNgayin(), cx.getNgaykhoihanh()).toMinutes();
+            return ss >= 30;
+        }
+        return false;
+    }
+    
+    public boolean isChoTrong(Ve ve, List<Ve> listVe){
+        Ve tmp = new Ve();
+        List<Ve> listVe2 = new ArrayList<>();
+        try(Connection conn = DatabaseConnection.getDBConnection()){
+            
+            String sql = "select * from ve where soghe = ? && chuyenxe_id = ? limit 1";
+            
+            PreparedStatement stml = conn.prepareCall(sql);
+            stml.setString(1, ve.getSoghe());
+            stml.setString(2, ve.getChuyenxe_id());
+            ResultSet rs = stml.executeQuery();
+            if(rs.next())
+            {
+               tmp = new Ve(rs.getString("id"), rs.getString("soghe"), rs.getDouble("giave"), rs.getTimestamp("ngayin").toLocalDateTime(), rs.getString("khachhang"), rs.getString("sdt"), rs.getString("user_id"), rs.getString("chuyenxe_id"));
+               listVe2.add(tmp);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(VeServices.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listVe.stream().filter(x->x.getSoghe().equals(ve.getSoghe()) && x.getChuyenxe_id().equals(ve.getChuyenxe_id())).findFirst().isEmpty() && listVe2.isEmpty();
+    }
+    
+    public boolean isChoTrong(String soGhe, String chuyenxe_id, List<Ve> listVe){
+        Ve tmp = new Ve();
+        List<Ve> listVe2 = new ArrayList<>();
+        try(Connection conn = DatabaseConnection.getDBConnection()){
+            
+            String sql = "select * from ve where soghe = ? && chuyenxe_id = ? limit 1";
+            
+            PreparedStatement stml = conn.prepareCall(sql);
+            stml.setString(1, soGhe);
+            stml.setString(2, chuyenxe_id);
+            ResultSet rs = stml.executeQuery();
+            if(rs.next())
+            {
+               tmp = new Ve(rs.getString("id"), rs.getString("soghe"), rs.getDouble("giave"), rs.getTimestamp("ngayin").toLocalDateTime(), rs.getString("khachhang"), rs.getString("sdt"), rs.getString("user_id"), rs.getString("chuyenxe_id"));
+               listVe2.add(tmp);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(VeServices.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listVe.stream().filter(x->x.getSoghe().equals(soGhe) && x.getChuyenxe_id().equals(chuyenxe_id)).findFirst().isEmpty() && listVe2.isEmpty();
     }
 }

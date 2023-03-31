@@ -4,6 +4,7 @@
  */
 package com.thao.banvexe;
 
+import com.thao.Services.VeServices;
 import com.thao.Utils.MessageBox;
 import static com.thao.banvexe.FXMLDatVeController.cx;
 import static com.thao.banvexe.FXMLDatVeController.listVeDaDat;
@@ -29,8 +30,20 @@ public class FXMLThongTinUserController {
         Alert confirm = MessageBox.getBox("Confirm", "Bạn có muốn đặt vé?", Alert.AlertType.CONFIRMATION);
         confirm.showAndWait().ifPresent(res -> {
             if(res == ButtonType.OK){
+                VeServices ves = new VeServices();
                 Ve ve = new Ve(soGhe.getText(), cx.getGiave(), LocalDateTime.now(), thongTinKH.getText(), sdt.getText(), "1", cx.getId()); 
-                listVeDaDat.add(ve);
+                if(ves.isChoTrong(ve, listVeDaDat)){
+                    
+                    if(ves.kiemTraVeDat(ve, cx))
+                        listVeDaDat.add(ve);
+                    else {
+                        Alert error = MessageBox.getBox("Không thể đặt vé!", "đã quá thời gian đặt vé", Alert.AlertType.ERROR);
+                        error.showAndWait();
+                    }
+                } else {
+                    Alert error = MessageBox.getBox("Không thể đặt vé!", "Chỗ đã được đặt trước", Alert.AlertType.ERROR);
+                        error.showAndWait();
+                }
             }
         });
     }

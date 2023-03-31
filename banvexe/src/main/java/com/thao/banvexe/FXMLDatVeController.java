@@ -53,6 +53,7 @@ import javafx.stage.Stage;
 public class FXMLDatVeController implements Initializable{
     public static List<Ve> listVeDaDat = new ArrayList<>();
     public static ChuyenXe cx = new ChuyenXe();
+    public static Ve v = new Ve();
     @FXML private TextField txtFind;
     @FXML private TableView<ChuyenXe> tbChuyenXe;
     @FXML private TableView<Ve> tbVe;
@@ -165,8 +166,32 @@ public class FXMLDatVeController implements Initializable{
             cell.setGraphic(btn);
             return cell;
         });
+        
+        TableColumn colBanVe = new TableColumn();
+        colBanVe.setCellFactory(evt -> {
+            Button btn = new Button("Bán Vé");
+            
+            btn.setOnAction(e -> {
+                Button b = (Button)e.getSource();
+                TableCell cell = (TableCell)b.getParent();
+                cx = (ChuyenXe) cell.getTableRow().getItem();
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLBanVe.fxml"));
+                        Parent root1;
+                        try {
+                            root1 = (Parent) fxmlLoader.load();
+                            Stage stage = new Stage();
+                            stage.setScene(new Scene(root1));
+                            stage.show(); 
+                        } catch (IOException ex) {
+                            Logger.getLogger(FXMLDatVeController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+            });
+            TableCell cell = new TableCell();
+            cell.setGraphic(btn);
+            return cell;
+        });
        
-        this.tbChuyenXe.getColumns().addAll(colName, colNgayKhoiHanh, colGiaVe, colXeKhach, colBenXeDi, colBenXeDen, colDatVe);
+        this.tbChuyenXe.getColumns().addAll(colName, colNgayKhoiHanh, colGiaVe, colXeKhach, colBenXeDi, colBenXeDen, colDatVe, colBanVe);
     }
     
     private void loadTableData(String kw) throws SQLException {
@@ -233,7 +258,36 @@ public class FXMLDatVeController implements Initializable{
             return cell;
         });
         
-        this.tbVe.getColumns().addAll(colSoGhe,colGiaVe, colNgayIn, colKH, colSDT, colUser, colCX, colConfirm, colHuyVe);
+        TableColumn colDoiVe = new TableColumn();
+        colDoiVe.setCellFactory(evt -> {
+            Button btn = new Button("Đổi vé");
+            btn.setOnAction(e -> {
+                Button b = (Button)e.getSource();
+                TableCell cell = (TableCell)b.getParent();
+                v = (Ve) cell.getTableRow().getItem();
+                VeServices ves = new VeServices();
+                if(ves.kiemTraVeDat(v, cx)){
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLDoiVe.fxml"));
+                        Parent root1;
+                            try {
+                                root1 = (Parent) fxmlLoader.load();
+                                Stage stage = new Stage();
+                                stage.setScene(new Scene(root1));
+                                stage.show(); 
+                            } catch (IOException ex) {
+                        Logger.getLogger(FXMLDatVeController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else {
+                    Alert error = MessageBox.getBox("Thông báo!", "Đã quá hạn đổi", Alert.AlertType.ERROR);
+                    error.showAndWait();
+                }
+            });
+            TableCell cell = new TableCell();
+            cell.setGraphic(btn);
+            return cell;
+        });
+        
+        this.tbVe.getColumns().addAll(colSoGhe,colGiaVe, colNgayIn, colKH, colSDT, colUser, colCX, colConfirm, colHuyVe, colDoiVe);
     }
     
     private void loadTableDataVeDaDat(String kw) {
@@ -248,5 +302,12 @@ public class FXMLDatVeController implements Initializable{
         }
        
         this.tbVe.setItems(FXCollections.observableList(test));
+    }
+    
+    public void xoaCacVeDaQuaHan(ActionEvent evt){
+        VeServices ves = new VeServices();
+        ChuyenXeServices cxs = new ChuyenXeServices();
+        listVeDaDat.removeIf(item -> !ves.kiemTraVeDat30(item, cxs.getCX(item.getChuyenxe_id())));
+        this.loadTableDataVeDaDat(null);
     }
 }

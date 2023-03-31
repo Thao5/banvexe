@@ -15,6 +15,8 @@ import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -57,6 +59,36 @@ public class ChuyenXeServices {
         }
         
         return listCX;
+    }
+    
+    public ChuyenXe getCX(String id){
+        try(Connection conn = DatabaseConnection.getDBConnection()){
+            String sql = "select * from chuyenxe where id = ?";
+            PreparedStatement stm = conn.prepareCall(sql);
+            stm.setString(1, id);
+            ResultSet rs = stm.executeQuery();
+            if(rs.next()){
+                return new ChuyenXe(rs.getString("id"), rs.getString("name"), rs.getTimestamp("ngaykhoihanh").toLocalDateTime(), rs.getDouble("giave"), rs.getString("xekhach_id"), rs.getString("benxedi_id"), rs.getString("benxeden_id"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ChuyenXeServices.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+    public ChuyenXe getCXTheoName(String name){
+        try(Connection conn = DatabaseConnection.getDBConnection()){
+            String sql = "select * from chuyenxe where name = ? limit 1";
+                        PreparedStatement stm = conn.prepareCall(sql);
+            stm.setString(1, name);
+            ResultSet rs = stm.executeQuery();
+            if(rs.next()){
+                return new ChuyenXe(rs.getString("id"), rs.getString("name"), rs.getTimestamp("ngaykhoihanh").toLocalDateTime(), rs.getDouble("giave"), rs.getString("xekhach_id"), rs.getString("benxedi_id"), rs.getString("benxeden_id"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ChuyenXeServices.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
    
 //    public static void main(String[] args) throws SQLException{
