@@ -27,7 +27,7 @@ public class FXMLBanVeController {
     
     public void banVe(ActionEvent evt){
         VeServices ves = new VeServices();
-        Ve veBan = new Ve(txtSoGhe.getText(), cx.getGiave(), LocalDateTime.now(), txtKH.getText(), txtSDT.getText(), "1", cx.getId());
+        Ve veBan = new Ve(txtSoGhe.getText(), cx.getGiave(), LocalDateTime.now(), txtKH.getText(), txtSDT.getText(), FXMLDangNhapController.account.getId(), cx.getId());
         if(ves.kiemTraVeMua(veBan, cx)){
             if(ves.isChoTrong(veBan, FXMLDatVeController.listVeDaDat)){
                 ves.themVe(veBan);

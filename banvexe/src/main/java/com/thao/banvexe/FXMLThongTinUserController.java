@@ -31,7 +31,7 @@ public class FXMLThongTinUserController {
         confirm.showAndWait().ifPresent(res -> {
             if(res == ButtonType.OK){
                 VeServices ves = new VeServices();
-                Ve ve = new Ve(soGhe.getText(), cx.getGiave(), LocalDateTime.now(), thongTinKH.getText(), sdt.getText(), "1", cx.getId()); 
+                Ve ve = new Ve(soGhe.getText(), cx.getGiave(), LocalDateTime.now(), thongTinKH.getText(), sdt.getText(), FXMLDangNhapController.account.getId(), cx.getId()); 
                 if(ves.isChoTrong(ve, listVeDaDat)){
                     
                     if(ves.kiemTraVeDat(ve, cx))
