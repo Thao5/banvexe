@@ -7,11 +7,14 @@ package com.thao.Services;
 import com.thao.pojo.XeKhach;
 import java.io.DataInputStream;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -31,5 +34,20 @@ public class XeKhachServices {
         
         
         return listXK;
+    }
+    
+    public XeKhach getXK(String id){
+        try(Connection conn = DatabaseConnection.getDBConnection()){
+            String sql = "select * from xekhach where id = ?";
+            PreparedStatement stml = conn.prepareCall(sql);
+            stml.setString(1, id);
+            ResultSet rs = stml.executeQuery();
+            if(rs.next()){
+                return new XeKhach(rs.getString("id"), rs.getInt("sochongoi"), rs.getString("bienso"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(XeKhachServices.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 }

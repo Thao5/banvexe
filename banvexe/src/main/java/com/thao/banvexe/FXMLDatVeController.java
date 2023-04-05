@@ -32,6 +32,7 @@ import java.io.File;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.thao.Services.GheServices;
 import com.thao.Services.VeServices;
+import com.thao.Utils.PrintWord;
 import com.thao.pojo.Ghe;
 import com.thao.pojo.Ve;
 import java.time.LocalDateTime;
@@ -235,6 +236,7 @@ public class FXMLDatVeController implements Initializable{
                 ves.themVe(ve);
                 GheServices ghes = new GheServices();
                 ghes.themGhe(new Ghe(ve.getSoghe(), true, ve.getId(), cx.getXekhach_id()));
+                PrintWord.printWord(ve, cx, FXMLDangNhapController.account);
                 listVeDaDat.remove(ve);
                 loadTableDataVeDaDat(null);
             });

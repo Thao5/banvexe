@@ -1,6 +1,4 @@
-D:\project_javafx\banvexe\src\main\java\com\thao\pojo\Ve.java
 D:\project_javafx\banvexe\src\main\java\com\thao\Services\GheServices.java
-D:\project_javafx\banvexe\src\main\java\com\thao\banvexe\FXMLDatVeController.java
 D:\project_javafx\banvexe\src\main\java\com\thao\pojo\User.java
 D:\project_javafx\banvexe\src\main\java\com\thao\banvexe\PrimaryController.java
 D:\project_javafx\banvexe\src\main\java\com\thao\pojo\ChuyenXeThuocTuyenDuong.java
@@ -9,9 +7,7 @@ D:\project_javafx\banvexe\src\main\java\com\thao\banvexe\App.java
 D:\project_javafx\banvexe\src\main\java\com\thao\pojo\XeKhach.java
 D:\project_javafx\banvexe\src\main\java\com\thao\banvexe\FXMLDangNhapController.java
 D:\project_javafx\banvexe\src\main\java\com\thao\banvexe\FXMLDoiVeController.java
-D:\project_javafx\banvexe\src\main\java\com\thao\Services\XeKhachServices.java
 D:\project_javafx\banvexe\src\main\java\com\thao\banvexe\SecondaryController.java
-D:\project_javafx\banvexe\src\main\java\com\thao\pojo\BenXe.java
 D:\project_javafx\banvexe\src\main\java\com\thao\pojo\ChuyenXe.java
 D:\project_javafx\banvexe\src\main\java\com\thao\Services\ChuyenXeServices.java
 D:\project_javafx\banvexe\src\main\java\com\thao\Services\DatabaseConnection.java
@@ -21,4 +17,10 @@ D:\project_javafx\banvexe\src\main\java\com\thao\Utils\MessageBox.java
 D:\project_javafx\banvexe\src\main\java\module-info.java
 D:\project_javafx\banvexe\src\main\java\com\thao\banvexe\FXMLBanVeController.java
 D:\project_javafx\banvexe\src\main\java\com\thao\pojo\TuyenDuong.java
+D:\project_javafx\banvexe\src\main\java\com\thao\pojo\Ve.java
+D:\project_javafx\banvexe\src\main\java\com\thao\Services\BenXeServices.java
+D:\project_javafx\banvexe\src\main\java\com\thao\banvexe\FXMLDatVeController.java
+D:\project_javafx\banvexe\src\main\java\com\thao\Utils\PrintWord.java
+D:\project_javafx\banvexe\src\main\java\com\thao\Services\XeKhachServices.java
+D:\project_javafx\banvexe\src\main\java\com\thao\pojo\BenXe.java
 D:\project_javafx\banvexe\src\main\java\com\thao\pojo\Ghe.java

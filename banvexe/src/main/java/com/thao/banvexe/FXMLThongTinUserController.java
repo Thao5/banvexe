@@ -4,7 +4,9 @@
  */
 package com.thao.banvexe;
 
+import com.thao.Services.ChuyenXeServices;
 import com.thao.Services.VeServices;
+import com.thao.Services.XeKhachServices;
 import com.thao.Utils.MessageBox;
 import static com.thao.banvexe.FXMLDatVeController.cx;
 import static com.thao.banvexe.FXMLDatVeController.listVeDaDat;
@@ -31,8 +33,10 @@ public class FXMLThongTinUserController {
         confirm.showAndWait().ifPresent(res -> {
             if(res == ButtonType.OK){
                 VeServices ves = new VeServices();
+                ChuyenXeServices cxs = new ChuyenXeServices();
+                XeKhachServices xks = new XeKhachServices();
                 Ve ve = new Ve(soGhe.getText(), cx.getGiave(), LocalDateTime.now(), thongTinKH.getText(), sdt.getText(), FXMLDangNhapController.account.getId(), cx.getId()); 
-                if(ves.isChoTrong(ve, listVeDaDat)){
+                if(ves.isChoTrong(ve, listVeDaDat) && cxs.demVeThuocChuyenXe(cx, listVeDaDat) < xks.getXK(cx.getXekhach_id()).getSochongoi()){
                     
                     if(ves.kiemTraVeDat(ve, cx))
                         listVeDaDat.add(ve);
@@ -41,7 +45,7 @@ public class FXMLThongTinUserController {
                         error.showAndWait();
                     }
                 } else {
-                    Alert error = MessageBox.getBox("Không thể đặt vé!", "Chỗ đã được đặt trước", Alert.AlertType.ERROR);
+                    Alert error = MessageBox.getBox("Không thể đặt vé!", "Chỗ đã được đặt trước  hoặc đã hết chỗ ngồi", Alert.AlertType.ERROR);
                         error.showAndWait();
                 }
             }

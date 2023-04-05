@@ -5,6 +5,7 @@
 package com.thao.Services;
 
 import com.thao.pojo.ChuyenXe;
+import com.thao.pojo.Ve;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
@@ -89,6 +90,24 @@ public class ChuyenXeServices {
             Logger.getLogger(ChuyenXeServices.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+    
+    public int demVeThuocChuyenXe(ChuyenXe cx, List<Ve> listVe){
+        int count = 0;
+        try(Connection conn = DatabaseConnection.getDBConnection()){
+            String sql = "select count(*) as total from Ve where chuyenxe_id = ?";
+            PreparedStatement stml = conn.prepareCall(sql);
+            
+            stml.setString(1, cx.getId());
+            ResultSet rs = stml.executeQuery();
+            while(rs.next()){
+                count = rs.getInt("total");
+            }
+            return count + listVe.size();
+        } catch (SQLException ex) {
+            Logger.getLogger(ChuyenXeServices.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return count;
     }
    
 //    public static void main(String[] args) throws SQLException{

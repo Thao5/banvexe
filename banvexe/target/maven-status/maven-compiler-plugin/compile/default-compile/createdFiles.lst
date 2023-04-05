@@ -1,6 +1,7 @@
 com\thao\Utils\MessageBox.class
 com\thao\Services\DatabaseConnection.class
 com\thao\Services\ChuyenXeServices.class
+com\thao\Services\VeServices.class
 com\thao\pojo\ChuyenXeThuocTuyenDuong.class
 com\thao\banvexe\PrimaryController.class
 com\thao\pojo\BenXe.class
@@ -8,10 +9,17 @@ com\thao\banvexe\FXMLThongTinUserController.class
 com\thao\pojo\Ghe.class
 com\thao\banvexe\FXMLDoiVeController.class
 module-info.class
+com\thao\banvexe\FXMLDatVeController.class
+com\thao\Services\UserServices.class
+com\thao\Utils\PrintWord.class
 com\thao\pojo\User.class
 com\thao\banvexe\App.class
+com\thao\Services\XeKhachServices.class
+com\thao\Services\GheServices.class
+com\thao\banvexe\FXMLBanVeController.class
 com\thao\pojo\ChuyenXe.class
 com\thao\banvexe\SecondaryController.class
 com\thao\pojo\Ve.class
 com\thao\pojo\XeKhach.class
 com\thao\pojo\TuyenDuong.class
+com\thao\banvexe\FXMLDangNhapController.class
