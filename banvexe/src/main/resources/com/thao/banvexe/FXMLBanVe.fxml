@@ -18,34 +18,34 @@
             </Text>
          </children>
       </HBox>
-      <HBox alignment="CENTER_LEFT" prefHeight="52.0" prefWidth="600.0">
+      <HBox alignment="CENTER" prefHeight="52.0" prefWidth="600.0">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Họ Tên Khách Hàng">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Họ Tên Khách Hàng" wrappingWidth="197.38592779636383">
                <font>
                   <Font size="16.0" />
                </font>
             </Text>
-            <TextField fx:id="txtKH" prefHeight="26.0" prefWidth="413.0" />
+            <TextField fx:id="txtKH" prefHeight="26.0" prefWidth="306.0" />
          </children>
       </HBox>
-      <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="98.0" prefHeight="52.0" prefWidth="600.0">
+      <HBox alignment="CENTER" layoutX="10.0" layoutY="98.0" prefHeight="52.0" prefWidth="600.0">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Số Điện Thoại">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Số Điện Thoại" wrappingWidth="197.18430280685425">
                <font>
                   <Font size="16.0" />
                </font>
             </Text>
-            <TextField fx:id="txtSDT" prefHeight="26.0" prefWidth="457.0" />
+            <TextField fx:id="txtSDT" prefHeight="26.0" prefWidth="303.0" />
          </children>
       </HBox>
-      <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="150.0" prefHeight="52.0" prefWidth="600.0">
+      <HBox alignment="CENTER" layoutX="10.0" layoutY="150.0" prefHeight="52.0" prefWidth="600.0">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Số Ghế">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Số Ghế" wrappingWidth="197.05624902248383">
                <font>
                   <Font size="16.0" />
                </font>
             </Text>
-            <TextField fx:id="txtSoGhe" prefHeight="26.0" prefWidth="505.0" />
+            <TextField fx:id="txtSoGhe" prefHeight="26.0" prefWidth="304.0" />
          </children>
       </HBox>
       <HBox alignment="CENTER" prefHeight="50.0" prefWidth="600.0">

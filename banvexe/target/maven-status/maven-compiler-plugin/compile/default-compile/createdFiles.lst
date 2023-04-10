@@ -20,6 +20,7 @@ com\thao\banvexe\FXMLBanVeController.class
 com\thao\pojo\ChuyenXe.class
 com\thao\banvexe\SecondaryController.class
 com\thao\pojo\Ve.class
+com\thao\Services\BenXeServices.class
 com\thao\pojo\XeKhach.class
 com\thao\pojo\TuyenDuong.class
 com\thao\banvexe\FXMLDangNhapController.class
