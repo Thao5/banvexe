@@ -82,8 +82,8 @@ public class VeServices {
             return result;
         } catch (SQLException ex) {
             Logger.getLogger(VeServices.class.getName()).log(Level.SEVERE, null, ex);
+            return 0;
         }
-        return 0;
     }
     
     public boolean kiemTraVeDat(Ve ve, ChuyenXe cx){
