@@ -155,4 +155,64 @@ public class VeServices {
         }
         return listVe.stream().filter(x->x.getSoghe().equals(soGhe) && x.getChuyenxe_id().equals(chuyenxe_id)).findFirst().isEmpty() && listVe2.isEmpty();
     }
+    
+    public List<Ve> getVeTheoChuyenXe(ChuyenXe cx){
+        List<Ve> listVe = new ArrayList<>();
+        try(Connection conn = DatabaseConnection.getDBConnection()){
+            String sql = "select * from ve where chuyenxe_id = ?";
+            PreparedStatement stml = conn.prepareCall(sql);
+            
+            stml.setString(1, cx.getId());
+            ResultSet rs = stml.executeQuery();
+            while(rs.next()){
+                listVe.add(new Ve(rs.getString("id"), rs.getString("soghe"), rs.getDouble("giave"), rs.getTimestamp("ngayin").toLocalDateTime(), rs.getString("khachhang"), rs.getString("sdt"), rs.getString("user_id"), rs.getString("chuyenxe_id")));
+            }
+            return listVe;
+        } catch (SQLException ex) {
+            Logger.getLogger(VeServices.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    
+    public int suaVe(Ve ve){
+        try(Connection conn = DatabaseConnection.getDBConnection()){
+            String sql = "update ve set soghe = ?, giave = ?, khachhang = ?, sdt = ?, user_id = ?, chuyenxe_id = ? where id = ?";
+            PreparedStatement stml = conn.prepareCall(sql);
+            
+            stml.setString(1, ve.getSoghe());
+            stml.setDouble(2, ve.getGiave());
+            stml.setString(3, ve.getKhachhang());
+            stml.setString(4, ve.getSdt());
+            stml.setString(5, ve.getUser_id());
+            stml.setString(6, ve.getChuyenxe_id());
+            stml.setString(7, ve.getId());
+            
+            return stml.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(VeServices.class.getName()).log(Level.SEVERE, null, ex);
+            return 0;
+        }
+    }
+    
+    public int xoaVe(String veID){
+        try(Connection conn = DatabaseConnection.getDBConnection()){
+            conn.setAutoCommit(false);
+            int count = 0;
+            String sql = "delete from ghe where ve_id = ?";
+            PreparedStatement stml = conn.prepareCall(sql);
+            stml.setString(1, veID);
+            count += stml.executeUpdate();
+            
+            sql = "delete from ve where id = ?";
+            stml = conn.prepareCall(sql);
+            stml.setString(1, veID);
+            count += stml.executeUpdate();
+            
+            conn.commit();
+            return count;
+        } catch (SQLException ex) {
+            Logger.getLogger(VeServices.class.getName()).log(Level.SEVERE, null, ex);
+            return 0;
+        }
+    }
 }

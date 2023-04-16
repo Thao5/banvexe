@@ -19,7 +19,9 @@ D:\project_javafx\banvexe\src\main\java\com\thao\banvexe\FXMLBanVeController.jav
 D:\project_javafx\banvexe\src\main\java\com\thao\pojo\TuyenDuong.java
 D:\project_javafx\banvexe\src\main\java\com\thao\pojo\Ve.java
 D:\project_javafx\banvexe\src\main\java\com\thao\Services\BenXeServices.java
+D:\project_javafx\banvexe\src\main\java\com\thao\Services\ChuyenXeThuocTuyenDuongServices.java
 D:\project_javafx\banvexe\src\main\java\com\thao\banvexe\FXMLDatVeController.java
+D:\project_javafx\banvexe\src\main\java\com\thao\Services\TuyenDuongServices.java
 D:\project_javafx\banvexe\src\main\java\com\thao\Utils\PrintWord.java
 D:\project_javafx\banvexe\src\main\java\com\thao\Services\XeKhachServices.java
 D:\project_javafx\banvexe\src\main\java\com\thao\pojo\BenXe.java

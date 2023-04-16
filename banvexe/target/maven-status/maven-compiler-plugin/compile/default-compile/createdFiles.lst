@@ -11,6 +11,7 @@ com\thao\banvexe\FXMLDoiVeController.class
 module-info.class
 com\thao\banvexe\FXMLDatVeController.class
 com\thao\Services\UserServices.class
+com\thao\Services\TuyenDuongServices.class
 com\thao\Utils\PrintWord.class
 com\thao\pojo\User.class
 com\thao\banvexe\App.class
@@ -23,4 +24,5 @@ com\thao\pojo\Ve.class
 com\thao\Services\BenXeServices.class
 com\thao\pojo\XeKhach.class
 com\thao\pojo\TuyenDuong.class
+com\thao\Services\ChuyenXeThuocTuyenDuongServices.class
 com\thao\banvexe\FXMLDangNhapController.class
