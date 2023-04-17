@@ -85,15 +85,7 @@ public class FXMLDatVeController implements Initializable{
                 });
 
             }
-            else if(tp.getSelectionModel().getSelectedIndex() == 1){
-                this.loadTableColumnVeDaDat();
-                    
-                this.loadTableDataVeDaDat(null);
-                
-                this.txtFindKH.textProperty().addListener(d->{
-                    this.loadTableDataVeDaDat(this.txtFindKH.getText());
-                });
-            }
+            
         });
         if(tp.getSelectionModel().getSelectedIndex() == 0){
                 try {

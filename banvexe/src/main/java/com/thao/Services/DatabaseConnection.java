@@ -20,12 +20,13 @@ public class DatabaseConnection {
      static {
          try {
              Class.forName("com.mysql.cj.jdbc.Driver");
-                     } catch (ClassNotFoundException ex) {
+                     }
+         catch (ClassNotFoundException ex) {
              ex.printStackTrace();
          }
     }
     public static Connection getDBConnection() throws SQLException{
-        return DriverManager.getConnection("jdbc:mysql://localhost/banvexe", "root", "123456");
+        return DriverManager.getConnection("jdbc:mysql://localhost/banvexe", "root", "Admin@123");
     }
     
     public static boolean createdDB(Connection conn){

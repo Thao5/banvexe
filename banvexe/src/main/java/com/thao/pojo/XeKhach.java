@@ -56,5 +56,10 @@ public class XeKhach {
     public void setBienso(String bienso) {
         this.bienso = bienso;
     }
+
+    @Override
+    public String toString() {
+        return this.bienso;
+    }
     
 }
