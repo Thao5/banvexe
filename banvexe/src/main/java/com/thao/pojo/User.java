@@ -36,7 +36,7 @@ public class User {
         this.admin = admin;
     }
     
-    public User(String id, String ho, String ten, String sdt, String username, String password, boolean admin, double sotienconlai) {
+    public User(String id, String ho, String ten, String sdt, String username, String password, boolean admin) {
         this.id = id;
         this.ho = ho;
         this.ten = ten;

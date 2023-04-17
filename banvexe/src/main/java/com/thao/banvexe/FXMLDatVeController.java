@@ -32,6 +32,7 @@ import java.io.File;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.thao.Services.GheServices;
 import com.thao.Services.VeServices;
+import com.thao.Utils.PrintWord;
 import com.thao.pojo.Ghe;
 import com.thao.pojo.Ve;
 import java.time.LocalDateTime;
@@ -42,6 +43,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.stage.Stage;
@@ -53,6 +55,7 @@ import javafx.stage.Stage;
 public class FXMLDatVeController implements Initializable{
     public static List<Ve> listVeDaDat = new ArrayList<>();
     public static ChuyenXe cx = new ChuyenXe();
+    public static Ve v = new Ve();
     @FXML private TextField txtFind;
     @FXML private TableView<ChuyenXe> tbChuyenXe;
     @FXML private TableView<Ve> tbVe;
@@ -84,6 +87,14 @@ public class FXMLDatVeController implements Initializable{
                     }
                 });
 
+            }else if(tp.getSelectionModel().getSelectedIndex() == 1){
+                this.loadTableColumnVeDaDat();
+                    
+                this.loadTableDataVeDaDat(null);
+                
+                this.txtFindKH.textProperty().addListener(d->{
+                    this.loadTableDataVeDaDat(this.txtFindKH.getText());
+                });
             }
             
         });
@@ -101,6 +112,26 @@ public class FXMLDatVeController implements Initializable{
                         Logger.getLogger(FXMLDatVeController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 });
+        }
+        
+        if(FXMLDangNhapController.account.isAdmin()){
+            Tab tabAdmin = new Tab("Admin", new Label("Admin"));
+            Button btn = new Button("Admin");
+            btn.setOnAction(e -> {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLAdmin.fxml"));
+                        Parent root1;
+                        try {
+                            root1 = (Parent) fxmlLoader.load();
+                            Stage stage = new Stage();
+                            stage.setScene(new Scene(root1));
+                            stage.show(); 
+                        } catch (IOException ex) {
+                            Logger.getLogger(FXMLDatVeController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+            });
+            tabAdmin.setContent(btn);
+            tp.getTabs().add(tabAdmin);
+            
         }
     }
     
@@ -157,8 +188,32 @@ public class FXMLDatVeController implements Initializable{
             cell.setGraphic(btn);
             return cell;
         });
+        
+        TableColumn colBanVe = new TableColumn();
+        colBanVe.setCellFactory(evt -> {
+            Button btn = new Button("Bán Vé");
+            
+            btn.setOnAction(e -> {
+                Button b = (Button)e.getSource();
+                TableCell cell = (TableCell)b.getParent();
+                cx = (ChuyenXe) cell.getTableRow().getItem();
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLBanVe.fxml"));
+                        Parent root1;
+                        try {
+                            root1 = (Parent) fxmlLoader.load();
+                            Stage stage = new Stage();
+                            stage.setScene(new Scene(root1));
+                            stage.show(); 
+                        } catch (IOException ex) {
+                            Logger.getLogger(FXMLDatVeController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+            });
+            TableCell cell = new TableCell();
+            cell.setGraphic(btn);
+            return cell;
+        });
        
-        this.tbChuyenXe.getColumns().addAll(colName, colNgayKhoiHanh, colGiaVe, colXeKhach, colBenXeDi, colBenXeDen, colDatVe);
+        this.tbChuyenXe.getColumns().addAll(colName, colNgayKhoiHanh, colGiaVe, colXeKhach, colBenXeDi, colBenXeDen, colDatVe, colBanVe);
     }
     
     private void loadTableData(String kw) throws SQLException {
@@ -202,6 +257,7 @@ public class FXMLDatVeController implements Initializable{
                 ves.themVe(ve);
                 GheServices ghes = new GheServices();
                 ghes.themGhe(new Ghe(ve.getSoghe(), true, ve.getId(), cx.getXekhach_id()));
+                PrintWord.printWord(ve, cx, FXMLDangNhapController.account);
                 listVeDaDat.remove(ve);
                 loadTableDataVeDaDat(null);
             });
@@ -225,7 +281,36 @@ public class FXMLDatVeController implements Initializable{
             return cell;
         });
         
-        this.tbVe.getColumns().addAll(colSoGhe,colGiaVe, colNgayIn, colKH, colSDT, colUser, colCX, colConfirm, colHuyVe);
+        TableColumn colDoiVe = new TableColumn();
+        colDoiVe.setCellFactory(evt -> {
+            Button btn = new Button("Đổi vé");
+            btn.setOnAction(e -> {
+                Button b = (Button)e.getSource();
+                TableCell cell = (TableCell)b.getParent();
+                v = (Ve) cell.getTableRow().getItem();
+                VeServices ves = new VeServices();
+                if(ves.kiemTraVeDat(v, cx)){
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLDoiVe.fxml"));
+                        Parent root1;
+                            try {
+                                root1 = (Parent) fxmlLoader.load();
+                                Stage stage = new Stage();
+                                stage.setScene(new Scene(root1));
+                                stage.show(); 
+                            } catch (IOException ex) {
+                        Logger.getLogger(FXMLDatVeController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else {
+                    Alert error = MessageBox.getBox("Thông báo!", "Đã quá hạn đổi", Alert.AlertType.ERROR);
+                    error.showAndWait();
+                }
+            });
+            TableCell cell = new TableCell();
+            cell.setGraphic(btn);
+            return cell;
+        });
+        
+        this.tbVe.getColumns().addAll(colSoGhe,colGiaVe, colNgayIn, colKH, colSDT, colUser, colCX, colConfirm, colHuyVe, colDoiVe);
     }
     
     private void loadTableDataVeDaDat(String kw) {
@@ -240,5 +325,12 @@ public class FXMLDatVeController implements Initializable{
         }
        
         this.tbVe.setItems(FXCollections.observableList(test));
+    }
+    
+    public void xoaCacVeDaQuaHan(ActionEvent evt){
+        VeServices ves = new VeServices();
+        ChuyenXeServices cxs = new ChuyenXeServices();
+        listVeDaDat.removeIf(item -> !ves.kiemTraVeDat30(item, cxs.getCX(item.getChuyenxe_id())));
+        this.loadTableDataVeDaDat(null);
     }
 }
