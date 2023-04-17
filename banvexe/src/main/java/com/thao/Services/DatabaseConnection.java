@@ -20,7 +20,8 @@ public class DatabaseConnection {
      static {
          try {
              Class.forName("com.mysql.cj.jdbc.Driver");
-                     } catch (ClassNotFoundException ex) {
+                     }
+         catch (ClassNotFoundException ex) {
              ex.printStackTrace();
          }
     }

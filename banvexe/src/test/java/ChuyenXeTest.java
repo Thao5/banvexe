@@ -8,6 +8,7 @@ import com.thao.Services.XeKhachServices;
 import com.thao.banvexe.FXMLDatVeController;
 import static com.thao.banvexe.FXMLDatVeController.listVeDaDat;
 import com.thao.pojo.ChuyenXe;
+import com.thao.pojo.TuyenDuong;
 import com.thao.pojo.Ve;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -34,7 +35,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  */
 public class ChuyenXeTest {
     @ParameterizedTest
-    @CsvSource({"TPHCM-Vũng Tàu", "TPHCM-Vi Thành"})
+    @CsvSource({"Hạ Long-TP.HCM", "TPHCM-Vi Thành"})
     public void testGetCXTheoNameNotNull(String name){
         ChuyenXeServices cxs = new ChuyenXeServices();
         assertNotNull(cxs.getCXTheoName(name));
@@ -76,19 +77,19 @@ public class ChuyenXeTest {
     }
     
     @ParameterizedTest
-    @CsvSource({"Hạ Long-TP.HCM, 2023-04-13 00:00:00, 100000, 1, 1, 2"})
+    @CsvSource({"Vi Thanh-TP.HCM, 2023-04-13 00:00:00, 100000, 1, 1, 4d186175-1103-4c92-8a91-1f478678d5ef"})
     public void testThemCXWorked(String name, String ngaykhoihanh, double giave, String xekhach_id, String benxedi_id, String benxeden_id){
         ChuyenXeServices cxs = new ChuyenXeServices();
         assertEquals(cxs.themCX(new ChuyenXe(name, LocalDateTime.parse(ngaykhoihanh, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), giave, xekhach_id, benxedi_id, benxeden_id)), 1);
     }
     
     @ParameterizedTest
-    @CsvSource({"41ecbb52-b644-45b3-80ff-2fa81cf86997", "52834e15-7cfe-487f-ad22-f4aa2d128970", "sadsad"})
-    public void testXoaCX(String ID){
+    @CsvSource({"85e673bd-4333-49c5-ba5a-14575981683c", "6f956f0d-dc2f-406f-8ed4-491880203b19"})
+    public void testXoaCXWorking(String ID){
         ChuyenXeServices cxs = new ChuyenXeServices();
         assertNotEquals(cxs.xoaCX(ID), 0);
     }
-    
+
     @ParameterizedTest
     @CsvSource({"8, Hạ Long-TP.HCM, 2023-04-13 00:00:00, 100000, 1, 1, 2, 1"})
     public void testSuaCX(String cxID, String name, String ngaykhoihanh, double giave, String xekhach_id, String benxedi_id, String benxeden_id, int test){

@@ -43,6 +43,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.stage.Stage;
@@ -86,8 +87,7 @@ public class FXMLDatVeController implements Initializable{
                     }
                 });
 
-            }
-            else if(tp.getSelectionModel().getSelectedIndex() == 1){
+            }else if(tp.getSelectionModel().getSelectedIndex() == 1){
                 this.loadTableColumnVeDaDat();
                     
                 this.loadTableDataVeDaDat(null);
@@ -96,6 +96,7 @@ public class FXMLDatVeController implements Initializable{
                     this.loadTableDataVeDaDat(this.txtFindKH.getText());
                 });
             }
+            
         });
         if(tp.getSelectionModel().getSelectedIndex() == 0){
                 try {
@@ -111,6 +112,26 @@ public class FXMLDatVeController implements Initializable{
                         Logger.getLogger(FXMLDatVeController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 });
+        }
+        
+        if(FXMLDangNhapController.account.isAdmin()){
+            Tab tabAdmin = new Tab("Admin", new Label("Admin"));
+            Button btn = new Button("Admin");
+            btn.setOnAction(e -> {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLAdmin.fxml"));
+                        Parent root1;
+                        try {
+                            root1 = (Parent) fxmlLoader.load();
+                            Stage stage = new Stage();
+                            stage.setScene(new Scene(root1));
+                            stage.show(); 
+                        } catch (IOException ex) {
+                            Logger.getLogger(FXMLDatVeController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+            });
+            tabAdmin.setContent(btn);
+            tp.getTabs().add(tabAdmin);
+            
         }
     }
     

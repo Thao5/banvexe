@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  * @author Chung Vu
  */
 public class GheServices {
-    public int themGhe(Ghe ghe){
+  public int themGhe(Ghe ghe){
         try(Connection conn = DatabaseConnection.getDBConnection()){
             conn.setAutoCommit(false);
             String sql = "insert into ghe values(?, ?, ?, ?, ?)";
@@ -85,4 +85,25 @@ public class GheServices {
             return 0;
         }
     }
+  public boolean checkGheTrong(String tenGhe) throws SQLException{
+    try (Connection conn = DatabaseConnection.getDBConnection()) {
+        
+
+        // Lấy thông tin ghế từ bảng Ghe
+        String sql = "SELECT * FROM Ghe WHERE name = ?";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setString(1, tenGhe);
+        ResultSet rs = stmt.executeQuery();
+
+        // Kiểm tra trạng thái ghế
+        while (rs.next()) {
+            boolean trangthai = rs.getBoolean("trangthai");
+            String ve_id = rs.getString("ve_id");
+           
+            if (trangthai==false&& ve_id == null)
+                return true;
+}
+    }
+        return false;
+} 
 }

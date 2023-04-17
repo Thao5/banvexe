@@ -9,6 +9,7 @@ import com.thao.Services.XeKhachServices;
 import com.thao.banvexe.FXMLDatVeController;
 import static com.thao.banvexe.FXMLDatVeController.listVeDaDat;
 import com.thao.pojo.ChuyenXe;
+import com.thao.pojo.User;
 import com.thao.pojo.Ve;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -40,9 +41,30 @@ public class UserTest {
     }
     
     @ParameterizedTest
-    @CsvSource({"thao, 1234568", "thao1, 123456", "test, test", ","})
+    @CsvSource({"thao, 1234568", "thao1, 123456", "test1, test1", ","})
     public void testGetUserNull(String username, String password){
         UserServices urs = new UserServices();
         assertNull(urs.getUser(username, password));
+    }
+    
+    @ParameterizedTest
+    @CsvSource({"test, test, 123456, test, test, false"})
+    public void testThemUser(String ho, String ten, String sdt, String username, String password, boolean admin){
+        UserServices urs = new UserServices();
+        assertEquals(1, urs.themUser(new User(ho, ten, sdt, username, password, admin)));
+    }
+    
+    @ParameterizedTest
+    @CsvSource({"597f93a1-cde4-4055-9770-b0ba5ff19d7e, test, test, 1234567, test, test, false"})
+    public void testSuaUser(String id, String ho, String ten, String sdt, String username, String password, boolean admin){
+        UserServices urs = new UserServices();
+        assertEquals(1, urs.suaUser(new User(id, ho, ten, sdt, username, password, admin)));
+    }
+    
+    @ParameterizedTest
+    @CsvSource({"597f93a1-cde4-4055-9770-b0ba5ff19d7e"})
+    public void testXoaUser(String id){
+        UserServices urs = new UserServices();
+        assertNotEquals(0, urs.xoaUser(id));
     }
 }

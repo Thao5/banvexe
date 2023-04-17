@@ -21,6 +21,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.junit.jupiter.api.Assertions;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 /**
  *
@@ -63,11 +64,23 @@ public class QuyDinhVeTest {
     }
     
     @ParameterizedTest
-    @CsvSource({"a13, 100000, 2023-04-11 14:51:00, test, 123456, 1, 9, 1", "a13, 100000, 2023-04-11 14:51:00, test, 123456, 1, 2, 0"})
+    @CsvSource({"a13, 100000, 2023-04-11 14:51:00, test, 123456, 1, a594fd4e-dc7c-40d3-8319-21ff159fd101, 1", "a13, 100000, 2023-04-11 14:51:00, test, 123456, 1, 2, 0"})
     public void testThemVe(String soGhe, Double giaVe, String ngayIn, String kh, String sdt, String userID, String cxID, int test){
         VeServices ves = new VeServices();
         assertEquals(ves.themVe(new Ve(soGhe, giaVe, LocalDateTime.parse(ngayIn, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), kh, sdt, userID, cxID)), test);
     }
     
+    @ParameterizedTest
+    @CsvSource({"d928671a-f754-4e86-aa5b-7137b38b1b31, a12, 100000, 2023-04-11 14:51:00, test, 123456, 1, a594fd4e-dc7c-40d3-8319-21ff159fd101, 1"})
+    public void testSuaVe(String id, String soGhe, Double giaVe, String ngayIn, String kh, String sdt, String userID, String cxID, int test){
+        VeServices ves = new VeServices();
+        assertEquals(1, ves.suaVe(new Ve(id, soGhe, giaVe, LocalDateTime.now(), kh, sdt, userID, cxID)));
+    }
     
+    @ParameterizedTest
+    @CsvSource({"d928671a-f754-4e86-aa5b-7137b38b1b31"})
+    public void testXoaVe(String id){
+        VeServices ves = new VeServices();
+        assertNotEquals(0, ves.xoaVe(id));
+    }
 }

@@ -35,7 +35,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
  */
 public class GheTest {
     @ParameterizedTest
-    @CsvSource({"a13, true, 8389ce52-e2dc-41e8-b581-1f9659bbce2e, 1"})
+    @CsvSource({"a13, true, a9f6853c-6859-4975-9bb7-38bc096d1f94, 1"})
     public void testThemGheNotNull(String gheName, boolean trangThai, String veID, String xkID){
         GheServices ghes = new GheServices();
         assertEquals(ghes.themGhe(new Ghe(gheName, trangThai, veID, xkID)), 1);
@@ -46,5 +46,19 @@ public class GheTest {
     public void testThemGheNull(String gheName, boolean trangThai, String veID, String xkID){
         GheServices ghes = new GheServices();
         assertEquals(ghes.themGhe(new Ghe(gheName, trangThai, veID, xkID)), 0);
+    }
+    
+    @ParameterizedTest
+    @CsvSource({"c841da72-a052-4ba9-aef2-c40546c0b640, a13, false, a9f6853c-6859-4975-9bb7-38bc096d1f94, 1"})
+    public void testSuaGhe(String id, String gheName, boolean trangThai, String veID, String xkID){
+        GheServices ghes = new GheServices();
+        assertEquals(ghes.suaGhe(new Ghe(id,gheName, trangThai, veID, xkID)), 1);
+    }
+    
+    @ParameterizedTest
+    @CsvSource({"c841da72-a052-4ba9-aef2-c40546c0b640"})
+    public void testXoaGhe(String id){
+        GheServices ghes = new GheServices();
+        assertNotEquals(ghes.xoaGhe(id), 0);
     }
 }

@@ -92,7 +92,7 @@ public class ChuyenXe {
         return benxedi_id;
     }
 
-    public void setBenxedi_id(String benxedi_id) {
+    public void setBenxed_id(String benxedi_id) {
         this.benxedi_id = benxedi_id;
     }
 

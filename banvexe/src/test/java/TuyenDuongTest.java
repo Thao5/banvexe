@@ -4,11 +4,13 @@
  */
 import com.thao.Services.BenXeServices;
 import com.thao.Services.ChuyenXeServices;
+import com.thao.Services.TuyenDuongServices;
 import com.thao.Services.VeServices;
 import com.thao.Services.XeKhachServices;
 import com.thao.banvexe.FXMLDatVeController;
 import com.thao.pojo.BenXe;
 import com.thao.pojo.ChuyenXe;
+import com.thao.pojo.TuyenDuong;
 import com.thao.pojo.Ve;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -31,39 +33,25 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
  *
  * @author Chung Vu
  */
-public class BenXeTest {
+public class TuyenDuongTest {
     @ParameterizedTest
-    @CsvSource({"1","2","3"})
-    public void testGetBenXeNotNull(String id){
-        BenXeServices bxs = new BenXeServices();
-        assertNotNull(bxs.getBX(id));
+    @CsvSource({"TP.HCM, Hạ Long"})
+    public void testThemTD(String diemdi, String diemden){
+        TuyenDuongServices tds = new TuyenDuongServices();
+        assertEquals(1, tds.themTD(new TuyenDuong(diemdi, diemden)));
     }
     
     @ParameterizedTest
-    @CsvSource({"11561","22165","31561"})
-    public void testGetBenXeNull(String id){
-        BenXeServices bxs = new BenXeServices();
-        assertNull(bxs.getBX(id));
+    @CsvSource({"f71402f4-7119-4486-af1f-ac9fcf9185ef, TP.HCM, Vi Thành"})
+    public void testSuaTD(String id, String diemdi, String diemden){
+        TuyenDuongServices tds = new TuyenDuongServices();
+        assertEquals(1, tds.suaTD(new TuyenDuong(id, diemdi, diemden)));
     }
     
     @ParameterizedTest
-    @CsvSource({"Thủ Dầu 1, TP.HCM, 1"})
-    public void testThemBX(String name, String address){
-        BenXeServices bxs = new BenXeServices();
-        assertEquals(1, bxs.themBX(new BenXe(name, address)));
-    }
-    
-    @ParameterizedTest
-    @CsvSource({"3, test, test"})
-    public void testSuaBX(String id, String name, String address){
-        BenXeServices bxs = new BenXeServices();
-        assertEquals(1, bxs.suaBX(new BenXe(id, name, address)));
-    }
-    
-    @ParameterizedTest
-    @CsvSource({"2, TPHCM, TPHCM"})
-    public void testXoaBX(String id, String name, String address){
-        BenXeServices bxs = new BenXeServices();
-        assertNotEquals(0, bxs.xoaBX(new BenXe(id, name, address)));
+    @CsvSource({"f71402f4-7119-4486-af1f-ac9fcf9185ef, TP.HCM, Vi Thành"})
+    public void testxoaTD(String id, String diemdi, String diemden){
+        TuyenDuongServices tds = new TuyenDuongServices();
+        assertNotEquals(0, tds.xoaTD(new TuyenDuong(id, diemdi, diemden)));
     }
 }
