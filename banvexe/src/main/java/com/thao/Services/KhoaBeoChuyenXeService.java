@@ -60,6 +60,28 @@ public class KhoaBeoChuyenXeService {
         return listchuyenXe;
     }
 
+    public ChuyenXe getChuyenXeById(String id) throws SQLException {
+        try (Connection conn = DatabaseConnection.getDBConnection()) {
+            String sql = "SELECT * FROM chuyenxe WHERE id = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                ChuyenXe cx = new ChuyenXe(
+                        rs.getString("id"),
+                        rs.getString("name"),
+                        rs.getTimestamp("ngaykhoihanh").toLocalDateTime(),
+                        rs.getDouble("giave"),
+                        rs.getString("xekhach_id"),
+                        rs.getString("benxedi_id"),
+                        rs.getString("benxeden_id")
+                );
+                return cx;
+            }
+            return null;
+        }
+    }
+
     public boolean checkTimeCX(String maChuyenXe) throws SQLException {
         boolean result = false;
         try (Connection conn = DatabaseConnection.getDBConnection()) {
