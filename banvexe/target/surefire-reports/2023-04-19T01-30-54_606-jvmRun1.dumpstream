@@ -1,0 +1,24 @@
+# Created at 2023-04-19T01:30:55.484
+Corrupted channel by directly writing to native stream in forked JVM 1. Stream '[0.453s][warning][exceptions] Class java.lang.Object in throws clause of method void KhoaBeoTimVeTest.TimVeSearch2() is not a subtype of class java.lang.Throwable'.
+
+# Created at 2023-04-19T01:30:55.484
+Corrupted channel by directly writing to native stream in forked JVM 1. Stream '[0.453s][warning][exceptions] Class java.lang.Object in throws clause of method void KhoaBeoTimVeTest.TimVeSearch() is not a subtype of class java.lang.Throwable'.
+
+# Created at 2023-04-19T01:30:55.484
+Corrupted channel by directly writing to native stream in forked JVM 1. Stream '[0.453s][warning][exceptions] Class java.lang.Object in throws clause of method void KhoaBeoTimVeTest.BeforeAll() is not a subtype of class java.lang.Throwable'.
+
+# Created at 2023-04-19T01:30:55.484
+Corrupted channel by directly writing to native stream in forked JVM 1. Stream '[0.453s][warning][exceptions] Class java.lang.Object in throws clause of method void KhoaBeoTimVeTest.afterAll() is not a subtype of class java.lang.Throwable'.
+
+# Created at 2023-04-19T01:30:55.484
+Corrupted channel by directly writing to native stream in forked JVM 1. Stream '[0.455s][warning][exceptions] Class java.lang.Object in throws clause of method void KhoaBeoTimVeTest.TimVeSearch2() is not a subtype of class java.lang.Throwable'.
+
+# Created at 2023-04-19T01:30:55.484
+Corrupted channel by directly writing to native stream in forked JVM 1. Stream '[0.455s][warning][exceptions] Class java.lang.Object in throws clause of method void KhoaBeoTimVeTest.TimVeSearch() is not a subtype of class java.lang.Throwable'.
+
+# Created at 2023-04-19T01:30:55.499
+Corrupted channel by directly writing to native stream in forked JVM 1. Stream '[0.455s][warning][exceptions] Class java.lang.Object in throws clause of method void KhoaBeoTimVeTest.BeforeAll() is not a subtype of class java.lang.Throwable'.
+
+# Created at 2023-04-19T01:30:55.556
+Corrupted channel by directly writing to native stream in forked JVM 1. Stream '[0.455s][warning][exceptions] Class java.lang.Object in throws clause of method void KhoaBeoTimVeTest.afterAll() is not a subtype of class java.lang.Throwable'.
+

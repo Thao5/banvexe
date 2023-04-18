@@ -44,7 +44,7 @@ public class KhoaBeoVeXeService {
         List<Ve> results = new ArrayList<>();
 
         try (Connection conn = DatabaseConnection.getDBConnection()) {
-            String sql = "SELECT * FROM ve WHERE DATE(ngayin) >= DATE(NOW())";
+           String sql = "SELECT * FROM ve WHERE DATE(ngayin) >= DATE_SUB(DATE(NOW()), INTERVAL 3 DAY)";
             if (kw != null && !kw.isEmpty()) {
                 sql += " AND id LIKE CONCAT('%', ?, '%')";
             }

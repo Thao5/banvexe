@@ -170,7 +170,9 @@ public class FXMLTimVeController implements Initializable {
         }
         this.kwSearch.textProperty().addListener(e -> {
             try {
+                if(!isSql(this.kwSearch.getText())){
                 this.LoadTableData(this.kwSearch.getText());
+                }
             } catch (SQLException ex1) {
                 Logger.getLogger(FXMLTimVeController.class.getName()).log(Level.SEVERE, null, ex1);
             }
@@ -197,6 +199,15 @@ public class FXMLTimVeController implements Initializable {
 //
 //            }
 //        });
+    }
+    public static boolean isSql(String kw) {
+        String[] sqlKeywords = {"SELECT", "INSERT", "UPDATE", "DELETE"};
+        for (String keyword : sqlKeywords) {
+            if (kw.contains(keyword)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

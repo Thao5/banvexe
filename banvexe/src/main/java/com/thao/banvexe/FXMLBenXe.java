@@ -66,6 +66,7 @@ public class FXMLBenXe implements Initializable {
             this.LoadTableColums();
             this.loadTableData(null);
             this.addBenXehandler();
+            this.autoFillInfo();
             this.txtSearch.textProperty().addListener(d -> {
                 try {
                     
@@ -309,6 +310,8 @@ public class FXMLBenXe implements Initializable {
             KhoaBeoBenXeService bxv = new KhoaBeoBenXeService();
             // Xuử lí Huy Ve
             Alert xacnhanXoaCx = MessageBox.getBox("Thêm Bến", "Bạn Có Chắc muốn Them Những thông tin hiện tại", Alert.AlertType.CONFIRMATION);
+            
+            if(checkInfoText(this.txtName.getText(), this.txtaddress.getText())){
             xacnhanXoaCx.showAndWait().ifPresent(respon -> {
                 if (respon == ButtonType.OK) {
                    
@@ -330,6 +333,30 @@ public class FXMLBenXe implements Initializable {
                     }
                 }
             });
+            }
+            else {
+                MessageBox.getBox("Lỗi", "Thông tin không hợp lệ", Alert.AlertType.ERROR);
+            }
         });
     }
+ public void autoFillInfo() {
+        this.tbvbx.setOnMouseClicked(e -> {
+            if (e.getClickCount() == 1) {
+                BenXe selectedCX = tbvbx.getSelectionModel().getSelectedItem();
+
+                txtName.setText(String.valueOf(selectedCX.getName()));
+                txtaddress.setText(selectedCX.getAddress());
+            }
+        });
+
+    }
+  public boolean checkInfoText(String name, String diachi) {
+        Boolean result = false;
+        if (!name.isEmpty() && !diachi.isEmpty()) {
+            result = true;
+            return result;
+        }
+        return result;
+    }
+ 
 }
