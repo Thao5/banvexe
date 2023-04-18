@@ -72,9 +72,9 @@ public class KhoaBeoAdminTest {
         "3,CX103,2023-04-19 00:00:00,250000,1,1,1",
         "4,CX104,2023-04-19 00:00:00,150000,1,1,1"
     })
-   public void testInsert(String id, String name, String ngaykhoihanhStr, double giave, int xekhach_id, int benxedi_id, int benxeden_id) throws SQLException {
+   public void testInsert(String id, String name, String ngaykhoihanhStr, double giave, String xekhach_id, String benxedi_id, String benxeden_id) throws SQLException {
         LocalDateTime ngaykhoihanh = LocalDateTime.parse(ngaykhoihanhStr, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        ChuyenXe chuyenXe = new ChuyenXe(id, name, ngaykhoihanh, giave, Integer.toString(xekhach_id), Integer.toString(benxedi_id), Integer.toString(benxeden_id));
+        ChuyenXe chuyenXe = new ChuyenXe(id, name, ngaykhoihanh, giave, xekhach_id, benxedi_id, benxeden_id);
         boolean result = kbcx.insertCx(chuyenXe);
         Assertions.assertTrue(result);
             PreparedStatement stm = conn.prepareCall("SELECT * FROM Chuyenxe WHERE id=?");
