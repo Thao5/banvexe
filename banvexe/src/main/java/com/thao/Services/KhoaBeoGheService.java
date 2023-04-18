@@ -13,6 +13,8 @@ import java.sql.SQLException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * //
@@ -83,16 +85,37 @@ public class KhoaBeoGheService {
         }
         return result;
     }
+public boolean updateGheEmpty2(Ghe ghe) throws SQLException {
+        boolean result = false;
+        try (Connection conn = DatabaseConnection.getDBConnection()) {
+            conn.setAutoCommit(false);
+         
+             String sql = "UPDATE Ghe  SET name = ?, trangthai = ?, ve_id = ?, xekhach_id = ? where id = ?";
+            PreparedStatement stml = conn.prepareCall(sql);
+            stml.setString(1, ghe.getName());
+            stml.setBoolean(2, false);
+            stml.setString(3, null);
+            stml.setString(4, ghe.getXekhach_id());
+            stml.setString(5, ghe.getId());
+            int kq = stml.executeUpdate();
+            if (kq > -0) {
+                conn.commit();
+            }
+            result = true;
+
+        }
+        return result;
+    }
 
     public boolean checkGheTrong(String tenGhe) throws SQLException {
         try (Connection conn = DatabaseConnection.getDBConnection()) {
-            // Lấy thông tin ghế từ bảng Ghe
+   
             String sql = "SELECT * FROM Ghe WHERE name = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, tenGhe);
             ResultSet rs = stmt.executeQuery();
 
-            // Kiểm tra trạng thái ghế
+       
             while (rs.next()) {
                 boolean trangthai = rs.getBoolean("trangthai");
                 String ve_id = rs.getString("ve_id");
@@ -103,5 +126,60 @@ public class KhoaBeoGheService {
             }
         }
         return false;
+    }
+
+    public boolean insertGhe(Ghe ghe) throws SQLException {
+        boolean result = false;
+        try (Connection conn = DatabaseConnection.getDBConnection()) {
+            conn.setAutoCommit(false);
+
+            String sql = "INSERT INTO ghe VALUES (?, ?, ?, ?, ?)";
+
+            PreparedStatement stml = conn.prepareCall(sql);
+            stml.setString(1, ghe.getId());
+            stml.setString(2, ghe.getName());
+            stml.setBoolean(3,false);
+           stml.setString(4, null);
+            stml.setString(5, ghe.getXekhach_id());
+           
+
+            int kq = stml.executeUpdate();
+            if (kq > 0) {
+                conn.commit();
+                result = true;
+            }
+        }
+        return result;
+    }
+
+    public boolean deleteGhe(String id) throws SQLException {
+        try (Connection conn = DatabaseConnection.getDBConnection()) {
+            String sql = "DELETE FROM ghe WHERE id=?";
+            PreparedStatement stm = conn.prepareCall(sql);
+            stm.setString(1, id);
+
+            return stm.executeUpdate() > 0;
+        }
+    }
+
+    public boolean updateGhe(Ghe ghe) throws SQLException {
+        boolean result = false;
+        try (Connection conn = DatabaseConnection.getDBConnection()) {
+            conn.setAutoCommit(false);
+
+            String sql = "UPDATE Ghe  SET name = ?, trangthai = ?, ve_id = ?, xekhach_id = ? where id = ?";
+            PreparedStatement stml = conn.prepareCall(sql);
+            stml.setString(1, ghe.getName());
+            stml.setBoolean(2, ghe.isTrangthai());
+            stml.setString(3, ghe.getVe_id());
+            stml.setString(4, ghe.getXekhach_id());
+            stml.setString(5, ghe.getId());
+            int kq = stml.executeUpdate();
+            if (kq > 0) {
+                conn.commit();
+                result = true;
+            }
+        }
+        return result;
     }
 }

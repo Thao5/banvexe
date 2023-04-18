@@ -204,6 +204,22 @@ public class FXMLAdminController implements Initializable {
                 } catch (IOException ex) {
                     Logger.getLogger(FXMLDatVeController.class.getName()).log(Level.SEVERE, null, ex);
                 }
+            } else if (tabPanel.getSelectionModel().getSelectedIndex() == 5) {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLUser.fxml"));
+                Parent root1;
+                try {
+                    root1 = (Parent) fxmlLoader.load();
+                    Stage stage = new Stage();
+                    stage.setScene(new Scene(root1));
+                    stage.show();
+                    tabPanel.getSelectionModel().select(5);
+                    // Đóng scene hiện tại
+                    Stage currentStage = (Stage) tabPanel.getScene().getWindow();
+                    currentStage.close();
+
+                } catch (IOException ex) {
+                    Logger.getLogger(FXMLDatVeController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }else if (tabPanel.getSelectionModel().getSelectedIndex() == 6) {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLXeKhach.fxml"));
                 Parent root1;

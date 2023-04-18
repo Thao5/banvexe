@@ -4,16 +4,13 @@
  */
 package com.thao.banvexe;
 
-import com.thao.Services.KhoaBeoBenXeService;
 import com.thao.Services.KhoaBeoChuyenXeService;
-import com.thao.Services.KhoaBeoChuyenXeTuyenDuongSer;
+import com.thao.Services.KhoaBeoGheService;
 import com.thao.Services.KhoaBeoUserService;
 import com.thao.Services.KhoaBeoXeKhachService;
 import com.thao.Utils.MessageBox;
-import com.thao.pojo.BenXe;
 import com.thao.pojo.ChuyenXe;
-import com.thao.pojo.ChuyenXeThuocTuyenDuong;
-import com.thao.pojo.TuyenDuong;
+import com.thao.pojo.Ghe;
 import com.thao.pojo.User;
 import com.thao.pojo.XeKhach;
 import java.io.IOException;
@@ -26,8 +23,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -37,7 +32,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
@@ -55,7 +49,7 @@ import javafx.stage.Stage;
  *
  * @author anhkh
  */
-public class FXMLUserController implements Initializable {
+public class FXMLGhe implements Initializable {
 
     @FXML
     private TabPane tabPanel;
@@ -68,38 +62,32 @@ public class FXMLUserController implements Initializable {
     @FXML
     private Button btnThem;
     @FXML
-    private TableView<User> tbvuser;
+    private TableView<Ghe> tbvghe;
 
     @FXML
-    private TextField txtHo;
-    @FXML
-    private TextField txtTen;
-    @FXML
-    private TextField txtSDT;
-    @FXML
-    private TextField txtUsername;
-    @FXML
-    private TextField txtPassword;
+    private TextField txtTenGhe;
+
     @FXML
     private TextField txtSearch;
     @FXML
-    private ComboBox<Integer> cbBox1 = new ComboBox<>();
+    private ComboBox<XeKhach> cbBox1;
     @FXML
-    private DatePicker dtPicker;
-    private static KhoaBeoUserService users = new KhoaBeoUserService();
+
+    private static KhoaBeoGheService gs = new KhoaBeoGheService();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        KhoaBeoXeKhachService xk = new KhoaBeoXeKhachService();
         try {
-            tabPanel.getSelectionModel().select(5);
+            List<XeKhach> lxk = xk.getXeKhach();
+            tabPanel.getSelectionModel().select(3);
             this.LoadTableColums();
             this.loadTableData(null);
-            ObservableList<Integer> items = FXCollections.observableArrayList(0, 1);
-            this.cbBox1.setItems(items);
-            this.cbBox1.setValue(0);
-            this.addUserHandler();
+            this.cbBox1.setItems(FXCollections.observableList(lxk));
+            this.cbBox1.setValue(lxk.get(0));
+            this.addGheHandler();
             this.autoFillInfo();
+            
         } catch (SQLException ex) {
             Logger.getLogger(FXMLAdminController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -242,44 +230,35 @@ public class FXMLUserController implements Initializable {
 
     public void LoadTableColums() {
 
-        this.tbvuser.getColumns().clear();
+        this.tbvghe.getColumns().clear();
 
-        TableColumn colHo = new TableColumn("Họ");
-        colHo.setCellValueFactory(new PropertyValueFactory("ho"));
+        TableColumn colName = new TableColumn("Tên Ghe");
+        colName.setCellValueFactory(new PropertyValueFactory("name"));
 
-        TableColumn colName = new TableColumn("Ten");
-        colName.setCellValueFactory(new PropertyValueFactory("ten"));
+        TableColumn colTrangThai = new TableColumn("trangthai");
+        colTrangThai.setCellValueFactory(new PropertyValueFactory("trangthai"));
 
-        TableColumn colSDT = new TableColumn("SDT");
-        colSDT.setCellValueFactory(new PropertyValueFactory("sdt"));
-
-        TableColumn colUsername = new TableColumn("UserName");
-        colUsername.setCellValueFactory(new PropertyValueFactory("username"));
-
-        TableColumn colPass = new TableColumn("Pass User");
-        colPass.setCellValueFactory(new PropertyValueFactory("password"));
-        TableColumn colAdmin = new TableColumn("Admin");
-        colAdmin.setCellValueFactory(new PropertyValueFactory("admin"));
-
-        TableColumn colBtn = new TableColumn();
+        TableColumn colCx = new TableColumn("Xe Khách");
+        colCx.setCellValueFactory(new PropertyValueFactory("xekhach_id"));
+         TableColumn colBtn = new TableColumn();
         colBtn.setCellFactory(evt -> {
 
             Button btnXoa = new Button("Xóa");
             btnXoa.setOnAction(e -> {
                 // Xuử lí Huy Ve
-                Alert xacnhanXoaCx = MessageBox.getBox("Xóa User", "Bạn Có Chắc muốn xóa", Alert.AlertType.CONFIRMATION);
+                Alert xacnhanXoaCx = MessageBox.getBox("Xóa Ghế", "Bạn Có Chắc muốn xóa", Alert.AlertType.CONFIRMATION);
                 xacnhanXoaCx.showAndWait().ifPresent(respon -> {
                     if (respon == ButtonType.OK) {
                         Button b = (Button) e.getSource();
                         TableCell cellv = (TableCell) b.getParent();
-                        User v = (User) cellv.getTableRow().getItem();
-
+                        Ghe v = (Ghe) cellv.getTableRow().getItem();
+             
                         try {
-                            if (users.deleteUser(v.getId())) {
-                                MessageBox.getBox("Xóa User", "Thành Công", Alert.AlertType.INFORMATION).show();
+                            if (gs.deleteGhe(v.getId())) {
+                                MessageBox.getBox("Xóa Ghế", "Thành Công", Alert.AlertType.INFORMATION).show();
                                 this.loadTableData(null);
                             } else {
-                                MessageBox.getBox("Xóa User", "Faild", Alert.AlertType.INFORMATION).show();
+                                MessageBox.getBox("Xóa Ghế", "Faild", Alert.AlertType.INFORMATION).show();
                             }
                         } catch (SQLException ex) {
 
@@ -297,31 +276,31 @@ public class FXMLUserController implements Initializable {
         colBtn2.setCellFactory(evt -> {
             Button btnDoiVe = new Button("Cập nhật!!!!");
             btnDoiVe.setOnAction(e -> {
-                Alert xacNhanDoiVe = MessageBox.getBox("Cập nhật !!!!", "BẠN CÓ CHẮC MUỐN Cập nhật chuyến NÀY ", Alert.AlertType.CONFIRMATION);
+                Alert xacNhanDoiVe = MessageBox.getBox("Cập nhật !!!!", "BẠN CÓ CHẮC MUỐN Cập nhật ", Alert.AlertType.CONFIRMATION);
                 xacNhanDoiVe.showAndWait().ifPresent(respon -> {
                     if (respon == ButtonType.OK) {
+                       
                         Button b = (Button) e.getSource();
                         TableCell cellv = (TableCell) b.getParent();
-                        User v = (User) cellv.getTableRow().getItem();
-                        boolean value = this.cbBox1.getValue() == 1 ? true : false;
-                        if (checkSoDienThoai(this.txtSDT.getText()) && checkInfoEmty(this.txtHo.getText(), this.txtTen.getText(), this.txtUsername.getText(), this.txtPassword.getText())) {
-                            User us = new User(v.getId(), this.txtHo.getText(), this.txtTen.getText(), this.txtSDT.getText(), this.txtUsername.getText(), this.txtPassword.getText(), value);
-                            try {
-                                if (users.updateUser(us)) {
-                                    MessageBox.getBox("Trạng Thái", "Thành Công", Alert.AlertType.INFORMATION).show();
-                                    this.loadTableData(null);
-                                } else {
-                                    MessageBox.getBox("Trạng Thái", "Faild", Alert.AlertType.INFORMATION).show();
-                                    this.loadTableData(null);
-                                }
-                            } catch (SQLException ex) {
+                        Ghe v = (Ghe) cellv.getTableRow().getItem();
+                        Ghe addcx = new Ghe(
+                                v.getId(), // set the ID of the selected record
+                              this.txtTenGhe.getText(),
+                                false,"",this.cbBox1.getSelectionModel().getSelectedItem().getId()
 
-                                Logger.getLogger(FXMLAdminController.class.getName()).log(Level.SEVERE, null, ex);
+                        );
+                        try {
+                            if (gs.updateGheEmpty2(addcx)) {
+                                MessageBox.getBox("Trạng Thái", "Thành Công", Alert.AlertType.INFORMATION).show();
+                                this.loadTableData(null);
+                            } else {
                                 MessageBox.getBox("Trạng Thái", "Faild", Alert.AlertType.INFORMATION).show();
+                                this.loadTableData(null);
                             }
-                        }else {
-                        Alert confirm = MessageBox.getBox("Lỗi nhập liệu", "Vui Lòng nhập lại", AlertType.INFORMATION);
-                        confirm.showAndWait();
+                        } catch (SQLException ex) {
+
+                            Logger.getLogger(FXMLAdminController.class.getName()).log(Level.SEVERE, null, ex);
+                            MessageBox.getBox("Trạng Thái", "Faild", Alert.AlertType.INFORMATION).show();
                         }
 
                     }
@@ -331,29 +310,31 @@ public class FXMLUserController implements Initializable {
             cell.setGraphic(btnDoiVe);
             return cell;
         });
-        this.tbvuser.getColumns().addAll(colHo, colName, colSDT, colUsername, colPass, colAdmin,colBtn,colBtn2);
+
+        this.tbvghe.getColumns().addAll(colName, colTrangThai, colCx,colBtn,colBtn2);
+
     }
 
-    private void loadTableData(String username) throws SQLException {
+    private void loadTableData(String kw) throws SQLException {
 
-        List<User> listUser = users.getListUser(username);
-        this.tbvuser.getItems().clear();
-        this.tbvuser.setItems(FXCollections.observableList(listUser));
+        List<Ghe> listGhe = gs.getListGhe(kw);
+        this.tbvghe.getItems().clear();
+        this.tbvghe.setItems(FXCollections.observableList(listGhe));
     }
-
-    public void addUserHandler() throws SQLException {
+     public void addGheHandler() throws SQLException {
 
         btnThem.setOnAction(e -> {
 
             // Xuử lí Huy Ve
-            Alert xacnhanXoaCx = MessageBox.getBox("Thêm User", "Bạn Có Chắc muốn Them Những thông tin hiện tại", Alert.AlertType.CONFIRMATION);
+            Alert xacnhanXoaCx = MessageBox.getBox("Thêm Ghế", "Bạn Có Chắc muốn Them Những thông tin hiện tại", Alert.AlertType.CONFIRMATION);
             xacnhanXoaCx.showAndWait().ifPresent(respon -> {
                 if (respon == ButtonType.OK) {
-                    boolean value = this.cbBox1.getValue() == 1 ? true : false;
-                    if (checkSoDienThoai(this.txtSDT.getText()) && checkInfoEmty(this.txtHo.getText(), this.txtTen.getText(), this.txtUsername.getText(), this.txtPassword.getText())) {
-                        User us = new User(this.txtHo.getText(), this.txtTen.getText(), this.txtSDT.getText(), this.txtUsername.getText(), this.txtPassword.getText(), value);
+                    if(checkInfoEmty(this.txtTenGhe.getText())) {
+                        boolean value = false;
+                        
+                        Ghe g = new Ghe(this.txtTenGhe.getText(), value,"",this.cbBox1.getSelectionModel().getSelectedItem().getId());
                         try {
-                            if (users.insertUser(us)) {
+                            if (gs.insertGhe(g)) {
                                 MessageBox.getBox("Trạng Thái", "Thành Công", Alert.AlertType.INFORMATION).show();
                                 this.loadTableData(null);
                             } else {
@@ -366,9 +347,9 @@ public class FXMLUserController implements Initializable {
                             Logger.getLogger(FXMLTimVeController.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     } else {
-                        Alert confirm = MessageBox.getBox("Lỗi nhập liệu", "Vui Lòng nhập lại", AlertType.INFORMATION);
+                        Alert confirm = MessageBox.getBox("Lỗi nhập liệu", "Vui Lòng nhập lại", Alert.AlertType.INFORMATION);
                         confirm.showAndWait();
-                        this.txtSDT.clear();
+                        
 
                     }
 
@@ -376,36 +357,22 @@ public class FXMLUserController implements Initializable {
             });
         });
     }
-
-    public boolean checkSoDienThoai(String phoneNumber) {
-        Pattern pattern = Pattern.compile("^\\d{10}$");
-        Matcher matcher = pattern.matcher(phoneNumber);
-        return matcher.matches();
-    }
-
-    public boolean checkInfoEmty(String ho, String ten, String userName, String pass) {
+     public boolean checkInfoEmty(String ten) {
         boolean result = false;
-        if (ho.isEmpty() || ten.isEmpty() || userName.isEmpty() || pass.isEmpty()) {
+        if ( ten.isEmpty()) {
             return result;
         }
         result = true;
         return result;
     }
-    public void autoFillInfo() {
-        this.tbvuser.setOnMouseClicked(e -> {
+     public void autoFillInfo() {
+        this.tbvghe.setOnMouseClicked(e -> {
             if (e.getClickCount() == 1) {
-                User selectedUser = tbvuser.getSelectionModel().getSelectedItem();
+                Ghe selectedGhe = tbvghe.getSelectionModel().getSelectedItem();
+                 txtTenGhe.setText(selectedGhe.getName());
 
-                // Điền thông tin vào các TextField tương ứng
-                txtHo.setText(selectedUser.getHo());
-                txtTen.setText(selectedUser.getTen());
-                txtSDT.setText(selectedUser.getSdt());
-                txtUsername.setText(selectedUser.getUsername());
-                txtPassword.setText(selectedUser.getPassword());
-                cbBox1.setValue(selectedUser.isAdmin() ? 1 : 0);
             }
         });
 
-    }
-
+}
 }

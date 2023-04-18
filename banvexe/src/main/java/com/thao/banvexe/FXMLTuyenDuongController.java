@@ -132,7 +132,7 @@ public class FXMLTuyenDuongController implements Initializable {
                     Logger.getLogger(FXMLDatVeController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }else if (tabPanel.getSelectionModel().getSelectedIndex() == 3) {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLXemGhe.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLGhe.fxml"));
                 Parent root1;
                 try {
                     root1 = (Parent) fxmlLoader.load();
