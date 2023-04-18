@@ -128,7 +128,7 @@ public class Ve {
 
     @Override
     public String toString() {
-        return "Ve{" + "id=" + id + ", soghe=" + soghe + ", giave=" + giave + ", ngayin=" + ngayin + ", khachhang=" + khachhang + ", sdt=" + sdt + ", user_id=" + user_id + ", chuyenxe_id=" + chuyenxe_id + '}';
+        return this.khachhang;
     }
     
     

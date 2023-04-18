@@ -5,33 +5,19 @@
 package com.thao.banvexe;
 
 import com.thao.Services.KhoaBeoBenXeService;
-import com.thao.Services.KhoaBeoChuyenXeService;
-import com.thao.Services.KhoaBeoVeXeService;
 import com.thao.Services.KhoaBeoXeKhachService;
 import com.thao.Utils.MessageBox;
 import com.thao.pojo.BenXe;
-import com.thao.pojo.ChuyenXe;
-import com.thao.pojo.Ve;
 import com.thao.pojo.XeKhach;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -40,8 +26,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableCell;
@@ -55,7 +39,7 @@ import javafx.stage.Stage;
  *
  * @author anhkh
  */
-public class FXMLAdminController implements Initializable {
+public class FXMLBenXe implements Initializable {
 
     @FXML
     private TabPane tabPanel;
@@ -64,51 +48,33 @@ public class FXMLAdminController implements Initializable {
     @FXML
     private Tab tab2;
     @FXML
-    private Button btnCapNhat;
-    @FXML
-    private Button btnThem;
-    @FXML
-    private TableView<ChuyenXe> tbvcx;
-    @FXML
-    private TableView<ChuyenXe> tbvbx;
-    @FXML
-    private ComboBox<BenXe> bx1;
-    @FXML
-    private ComboBox<BenXe> bx2;
-    @FXML
-    private ComboBox<XeKhach> cbXk;
+    private TableView<BenXe> tbvbx;
     @FXML
     private TextField txtName;
     @FXML
-    private TextField txtSoGhe;
+    private TextField txtaddress;
     @FXML
     private TextField txtSearch;
     @FXML
-    private TextField txtPrice;
-    @FXML
-    private DatePicker dtPicker;
+    private Button btnThem;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        KhoaBeoBenXeService bx = new KhoaBeoBenXeService();
-        KhoaBeoXeKhachService xk = new KhoaBeoXeKhachService();
         try {
+            tabPanel.getSelectionModel().select(1);
 
-            List<BenXe> lbx = bx.getBenXe();
-            List<XeKhach> lxk = xk.getXeKhach();
-            this.bx1.setItems(FXCollections.observableList(lbx));
-            this.bx2.setItems(FXCollections.observableList(lbx));
-            this.cbXk.setItems(FXCollections.observableList(lxk));
             this.LoadTableColums();
             this.loadTableData(null);
+            this.addBenXehandler();
             this.txtSearch.textProperty().addListener(d -> {
                 try {
+                    
                     this.loadTableData(this.txtSearch.getText());
                 } catch (SQLException ex) {
                     Logger.getLogger(FXMLDatVeController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             });
-            this.addChuyenXehandler();
+
         } catch (SQLException ex) {
             Logger.getLogger(FXMLAdminController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -116,10 +82,20 @@ public class FXMLAdminController implements Initializable {
         //////////XỬ LÍ TABPANEL
         this.tabPanel.getSelectionModel().selectedItemProperty().addListener((ObservableValue<? extends Tab> ov, Tab tab1, Tab tab2) -> {
             if (tabPanel.getSelectionModel().getSelectedIndex() == 0) {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLAdmin.fxml"));
+                Parent root1;
                 try {
-                    this.LoadTableColums();
-                    this.loadTableData(null);
-                } catch (SQLException ex) {
+                    root1 = (Parent) fxmlLoader.load();
+                    Stage stage = new Stage();
+                    stage.setScene(new Scene(root1));
+                    stage.show();
+
+                    // Đóng scene hiện tại
+                    Stage currentStage = (Stage) tabPanel.getScene().getWindow();
+                    currentStage.close();
+                
+
+                } catch (IOException ex) {
                     Logger.getLogger(FXMLDatVeController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } else if (tabPanel.getSelectionModel().getSelectedIndex() == 1) {
@@ -187,9 +163,8 @@ public class FXMLAdminController implements Initializable {
                 } catch (IOException ex) {
                     Logger.getLogger(FXMLDatVeController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }
-            else if (tabPanel.getSelectionModel().getSelectedIndex() == 4) {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLTuyenduong.fxml"));
+            }else if (tabPanel.getSelectionModel().getSelectedIndex() == 4) {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLTuyenDuong.fxml"));
                 Parent root1;
                 try {
                     root1 = (Parent) fxmlLoader.load();
@@ -204,8 +179,8 @@ public class FXMLAdminController implements Initializable {
                 } catch (IOException ex) {
                     Logger.getLogger(FXMLDatVeController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } else if (tabPanel.getSelectionModel().getSelectedIndex() == 5) {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLUser.fxml"));
+            }else if (tabPanel.getSelectionModel().getSelectedIndex() == 5) {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXML.fxml"));
                 Parent root1;
                 try {
                     root1 = (Parent) fxmlLoader.load();
@@ -237,44 +212,17 @@ public class FXMLAdminController implements Initializable {
                     Logger.getLogger(FXMLDatVeController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-
         });
     }
 
-    public void LoadTableColumsBX() {
-        this.tbvcx.getColumns().clear();
+    public void LoadTableColums() {
+        this.tbvbx.getColumns().clear();
         TableColumn colName = new TableColumn("Tên Bến Xe");
         colName.setCellValueFactory(new PropertyValueFactory("name"));
 
         TableColumn coladress = new TableColumn("Địa Điểm");
         coladress.setCellValueFactory(new PropertyValueFactory("address"));
-
-        this.tbvbx.getColumns().addAll(colName, coladress); // sửa đổi tên của TableView ở đây
-    }
-
-    public void LoadTableColums() {
-
-        this.tbvcx.getColumns().clear();
-
-        TableColumn colName = new TableColumn("Tên chuyến đi");
-        colName.setCellValueFactory(new PropertyValueFactory("name"));
-
-        TableColumn colNgayKhoiHanh = new TableColumn("Ngày Khởi Hành");
-        colNgayKhoiHanh.setCellValueFactory(new PropertyValueFactory("ngaykhoihanh"));
-
-        TableColumn colGiaVe = new TableColumn("Giá Vé");
-        colGiaVe.setCellValueFactory(new PropertyValueFactory("giave"));
-
-        TableColumn colXeKhach = new TableColumn("Xe Khách");
-        colXeKhach.setCellValueFactory(new PropertyValueFactory("xekhach_id"));
-
-        TableColumn colBenXeDi = new TableColumn("Bến Xe Đi");
-        colBenXeDi.setCellValueFactory(new PropertyValueFactory("benxedi_id"));
-//        colBenXeDi.setCellValueFactory(cellData -> {
-//            
-//        });
-        TableColumn colBenXeDen = new TableColumn("Bến Xe Đến");
-        colBenXeDen.setCellValueFactory(new PropertyValueFactory("benxeden_id"));
+        /////// add nút
         TableColumn colBtn = new TableColumn();
         colBtn.setCellFactory(evt -> {
 
@@ -286,14 +234,14 @@ public class FXMLAdminController implements Initializable {
                     if (respon == ButtonType.OK) {
                         Button b = (Button) e.getSource();
                         TableCell cellv = (TableCell) b.getParent();
-                        ChuyenXe v = (ChuyenXe) cellv.getTableRow().getItem();
-                        KhoaBeoChuyenXeService cx = new KhoaBeoChuyenXeService();
+                        BenXe v = (BenXe) cellv.getTableRow().getItem();
+                        KhoaBeoBenXeService bx = new KhoaBeoBenXeService();
                         try {
-                            if (cx.deleteChuyenXe(v.getId())) {
-                                MessageBox.getBox("Xóa Chuyến", "Thành Công", Alert.AlertType.INFORMATION).show();
+                            if (bx.deleteBenXe(v.getId())) {
+                                MessageBox.getBox("Xóa Bến", "Thành Công", Alert.AlertType.INFORMATION).show();
                                 this.loadTableData(null);
                             } else {
-                                MessageBox.getBox("Xóa Chuyến", "Faild", Alert.AlertType.INFORMATION).show();
+                                MessageBox.getBox("Xóa Bến", "Faild", Alert.AlertType.INFORMATION).show();
                             }
                         } catch (SQLException ex) {
 
@@ -314,25 +262,19 @@ public class FXMLAdminController implements Initializable {
                 Alert xacNhanDoiVe = MessageBox.getBox("Cập nhật !!!!", "BẠN CÓ CHẮC MUỐN Cập nhật chuyến NÀY ", Alert.AlertType.CONFIRMATION);
                 xacNhanDoiVe.showAndWait().ifPresent(respon -> {
                     if (respon == ButtonType.OK) {
-                        LocalDate date = this.dtPicker.getValue();
-                        LocalTime time = LocalTime.now();
-                        LocalDateTime dateTime = date.atTime(time);
+                      
 
                         Button b = (Button) e.getSource();
                         TableCell cellv = (TableCell) b.getParent();
-                        ChuyenXe v = (ChuyenXe) cellv.getTableRow().getItem();
-                        KhoaBeoChuyenXeService cx = new KhoaBeoChuyenXeService();
-                        ChuyenXe addcx = new ChuyenXe(
+                        BenXe v = (BenXe) cellv.getTableRow().getItem();
+                        KhoaBeoBenXeService bx = new KhoaBeoBenXeService();
+                        BenXe addbx = new BenXe(
                                 v.getId(), // set the ID of the selected record
                                 this.txtName.getText(),
-                                dateTime,
-                                Double.valueOf(this.txtPrice.getText()),
-                                this.cbXk.getSelectionModel().getSelectedItem().getId(),
-                                this.bx1.getSelectionModel().getSelectedItem().getId(),
-                                this.bx2.getSelectionModel().getSelectedItem().getId()
+                                this.txtaddress.getText()
                         );
                         try {
-                            if (cx.updateCx(addcx)) {
+                            if (bx.updateBenXe(addbx)) {
                                 MessageBox.getBox("Trạng Thái", "Thành Công", Alert.AlertType.INFORMATION).show();
                                 this.loadTableData(null);
                             } else {
@@ -352,38 +294,29 @@ public class FXMLAdminController implements Initializable {
             cell.setGraphic(btnDoiVe);
             return cell;
         });
-
-        this.tbvcx.getColumns().addAll(colName, colNgayKhoiHanh, colGiaVe, colXeKhach, colBenXeDi, colBenXeDen, colBtn, colBtn2);
+        this.tbvbx.getColumns().addAll(colName, coladress,colBtn,colBtn2); // sửa đổi tên của TableView ở đây
     }
 
     private void loadTableData(String kw) throws SQLException {
-        KhoaBeoChuyenXeService cxs = new KhoaBeoChuyenXeService();
-        List<ChuyenXe> listCX = cxs.getChuyenXe(kw);
-        this.tbvcx.getItems().clear();
-        this.tbvcx.setItems(FXCollections.observableList(listCX));
+        KhoaBeoBenXeService bxs = new KhoaBeoBenXeService();
+        List<BenXe> listbx = bxs.getLBenXe(kw);
+        this.tbvbx.getItems().clear();
+        this.tbvbx.setItems(FXCollections.observableList(listbx));
     }
-
-    public void addChuyenXehandler() throws SQLException {
+ public void addBenXehandler() throws SQLException {
 
         btnThem.setOnAction(e -> {
-            KhoaBeoChuyenXeService cxv = new KhoaBeoChuyenXeService();
+            KhoaBeoBenXeService bxv = new KhoaBeoBenXeService();
             // Xuử lí Huy Ve
-            Alert xacnhanXoaCx = MessageBox.getBox("Them Chuyến", "Bạn Có Chắc muốn Them Những thông tin hiện tại", Alert.AlertType.CONFIRMATION);
+            Alert xacnhanXoaCx = MessageBox.getBox("Thêm Bến", "Bạn Có Chắc muốn Them Những thông tin hiện tại", Alert.AlertType.CONFIRMATION);
             xacnhanXoaCx.showAndWait().ifPresent(respon -> {
                 if (respon == ButtonType.OK) {
-                    LocalDate date = this.dtPicker.getValue();
-                    LocalTime time = LocalTime.now();
-                    LocalDateTime dateTime = date.atTime(time);
-                    ChuyenXe addcx = new ChuyenXe(
-                            this.txtName.getText(), // lấy tên từ textfield
-                            dateTime, // lấy ngày khởi hành từ datetime picker
-                            Double.valueOf(this.txtPrice.getText()), // lấy giá vé từ textfield và chuyển về kiểu Double
-                            this.cbXk.getSelectionModel().getSelectedItem().getId(), // lấy ID xe khách được chọn từ combobox
-                            this.bx1.getSelectionModel().getSelectedItem().getId(), // lấy ID bến xe đi được chọn từ combobox
-                            this.bx2.getSelectionModel().getSelectedItem().getId() // lấy ID bến xe đến được chọn từ combobox
-                    );
+                   
+                        BenXe addbx = new BenXe(this.txtName.getText(), this.txtaddress.getText());
+                           
+     
                     try {
-                        if (cxv.insertCx(addcx)) {
+                        if (bxv.insertBenXe(addbx)) {
                             MessageBox.getBox("Trạng Thái", "Thành Công", Alert.AlertType.INFORMATION).show();
                             this.loadTableData(null);
                         } else {
@@ -399,5 +332,4 @@ public class FXMLAdminController implements Initializable {
             });
         });
     }
-
 }

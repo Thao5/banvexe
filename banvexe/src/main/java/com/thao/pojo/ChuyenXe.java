@@ -103,4 +103,7 @@ public class ChuyenXe {
     public void setBenxeden_id(String benxeden_id) {
         this.benxeden_id = benxeden_id;
     }
+    public String toString() {
+        return this.name;
+    }
 }

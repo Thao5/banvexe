@@ -15,9 +15,9 @@
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="476.0" prefWidth="864.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.thao.banvexe.FXMLAdminController">
    <children>
-      <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="tabPanel" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab text="Untitled Tab 1">
+          <Tab fx:id="tab1" text="Chuyến Xe">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="207.0" prefWidth="864.0">
                      <children>
@@ -63,7 +63,7 @@
                               <DatePicker fx:id="dtPicker" />
                            </children>
                         </HBox>
-                        <Button layoutX="706.0" layoutY="122.0" mnemonicParsing="false" onAction="#addChuyenXehandler" prefHeight="26.0" prefWidth="131.0" text="Tạo Chuyến" />
+                        <Button fx:id="btnThem" layoutX="706.0" layoutY="122.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="131.0" text="Tạo Chuyến" />
                         <HBox alignment="CENTER" layoutX="146.0" layoutY="122.0" prefHeight="34.0" prefWidth="441.0">
                            <children>
                               <Label prefHeight="18.0" prefWidth="122.0" text="Search">
@@ -71,20 +71,25 @@
                                     <Font size="26.0" />
                                  </font>
                               </Label>
-                              <TextField prefHeight="26.0" prefWidth="295.0" />
+                              <TextField fx:id="txtSearch" prefHeight="26.0" prefWidth="295.0" />
                            </children>
                         </HBox>
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab text="Untitled Tab 2">
+          <Tab fx:id="tab2" text="Bến Xe">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
             </content>
           </Tab>
+            <Tab fx:id="tab11" text="Chuyến Xe_Tuyến đường" />
+            <Tab fx:id="tab111" text="Ghế" />
+            <Tab fx:id="tab1111" text="Tuyến Đường" />
+            <Tab fx:id="tab11111" text="User" />
+            <Tab fx:id="tab111111" text="Xe Khách" />
         </tabs>
       </TabPane>
-      <TableView fx:id="tbvcx" prefHeight="202.0" prefWidth="864.0" />
+      <TableView fx:id="tbvcx" prefHeight="200.0" prefWidth="200.0" />
    </children>
 </VBox>
