@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.thao.banvexe.FXMLTuyenDuongController">
+   <children>
+      <TabPane fx:id="tabPanel" prefHeight="198.0" prefWidth="633.0" tabClosingPolicy="UNAVAILABLE">
+         <tabs>
+            <Tab fx:id="tab1" text="Chuyến Xe" />
+            <Tab fx:id="tab2" text="Bến Xe" />
+            <Tab fx:id="tab11" text="Chuyến Xe_Tuyến đường" />
+            <Tab fx:id="tab111" text="Ghế" />
+            <Tab fx:id="tab1111" text="Tuyến Đường">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <HBox layoutX="42.0" layoutY="14.0" prefHeight="43.0" prefWidth="230.0">
+                           <children>
+                              <Label prefHeight="18.0" prefWidth="74.0" text="Điểm Đi" />
+                              <TextField fx:id="txtDiemDi" prefHeight="26.0" prefWidth="138.0" />
+                           </children>
+                        </HBox>
+                        <HBox layoutX="42.0" layoutY="57.0" prefHeight="34.0" prefWidth="216.0">
+                           <children>
+                              <Label prefHeight="18.0" prefWidth="72.0" text="Diểm Đến" />
+                              <TextField fx:id="txtDiemDen" prefHeight="26.0" prefWidth="143.0" />
+                           </children>
+                        </HBox>
+                        <HBox layoutX="42.0" layoutY="91.0" prefHeight="44.0" prefWidth="368.0">
+                           <children>
+                              <Label prefHeight="43.0" prefWidth="62.0" text="Search" />
+                              <TextField fx:id="txtSearch" prefHeight="44.0" prefWidth="347.0" />
+                           </children>
+                        </HBox>
+                        <Button fx:id="btnThem" layoutX="459.0" layoutY="113.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="95.0" text="Thêm" />
+                     </children>
+                  </AnchorPane>
+               </content></Tab>
+            <Tab fx:id="tab11111" text="User" />
+            <Tab fx:id="tab111111" text="Xe Khách" />
+         </tabs>
+      </TabPane>
+      <TableView fx:id="tbvtd" prefHeight="200.0" prefWidth="200.0" />
+   </children>
+</VBox>

@@ -57,5 +57,8 @@ public class TuyenDuong {
     public void setDiemden(String diemden) {
         this.diemden = diemden;
     }
-    
+    @Override
+        public String toString() {
+       return this.diemdi + " => " + this.diemden;
+    }
 }

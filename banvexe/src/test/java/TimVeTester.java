@@ -34,10 +34,10 @@ public class TimVeTester {
     }
     @Test
     public void TimVeSearch() throws SQLException {
-        List<Ve> ves = kb.getListVe("fccb720a-3e6f-4949-8876-43a42211fbad");
+        List<Ve> ves = kb.getListVe("2c0242d3-e16e-4ed0-beb9-bb738afc63bc");
         Assertions.assertEquals(1,ves.size());
         for(Ve v : ves){
-            Assertions.assertTrue(v.getId().contains("fccb720a-3e6f-4949-8876-43a42211fbad"));
+            Assertions.assertTrue(v.getId().contains("2c0242d3-e16e-4ed0-beb9-bb738afc63bc"));
         }
     }
      public void TimVeSearch2() throws SQLException {

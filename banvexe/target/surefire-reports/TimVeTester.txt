@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: TimVeTester
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.393 s <<< FAILURE! - in TimVeTester
+TimVeSearch  Time elapsed: 0.05 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <1> but was: <0>
+	at TimVeTester.TimVeSearch(TimVeTester.java:38)
+
