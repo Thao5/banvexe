@@ -57,11 +57,12 @@ public class KhoaBeoTuyenduongService {
         try (Connection conn = DatabaseConnection.getDBConnection()) {
             conn.setAutoCommit(false);
 
-            String sql = "insert into Tuyenduong values(?,?,?)";
-            PreparedStatement stml = conn.prepareCall(sql);
+                     String sql = "INSERT INTO Tuyenduong VALUES (?, ?, ?)";
 
-            stml.setString(1, TuyenDuong.getDiemdi());
-            stml.setString(2, TuyenDuong.getDiemden());
+            PreparedStatement stml = conn.prepareCall(sql);
+            stml.setString(1, TuyenDuong.getId());
+            stml.setString(2, TuyenDuong.getDiemdi());
+            stml.setString(3, TuyenDuong.getDiemden());
           
             int kq = stml.executeUpdate();
             if (kq > 0) {

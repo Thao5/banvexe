@@ -289,7 +289,7 @@ public class FXMLTuyenDuongController implements Initializable {
         btnThem.setOnAction(e -> {
 
             // Xuử lí Huy Ve
-            Alert xacnhanXoaCx = MessageBox.getBox("Thêm Xe Khach", "Bạn Có Chắc muốn Them Những thông tin hiện tại", Alert.AlertType.CONFIRMATION);
+            Alert xacnhanXoaCx = MessageBox.getBox("Thêm Tuyến đường", "Bạn Có Chắc muốn Them Những thông tin hiện tại", Alert.AlertType.CONFIRMATION);
             xacnhanXoaCx.showAndWait().ifPresent(respon -> {
                 if (respon == ButtonType.OK) {
 

@@ -4,6 +4,8 @@ module com.thao.banvexe {
     requires java.sql;
     requires com.fasterxml.jackson.databind;
     requires com.fasterxml.jackson.datatype.jsr310;
+    requires org.apache.poi.ooxml;
+    
     
     opens com.thao.banvexe to javafx.fxml;
     opens com.thao.pojo to javafx.fxml;

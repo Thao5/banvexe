@@ -92,6 +92,7 @@ public class FXMLCX_TD implements Initializable{
            
             this.LoadTableColums();
             this.loadTableData(null);
+            this.addCXTDhandler();
             this.txtSearch.textProperty().addListener(d -> {
                 try {
                     this.loadTableData(this.txtSearch.getText());
@@ -232,79 +233,106 @@ public class FXMLCX_TD implements Initializable{
         TableColumn coladress = new TableColumn("Tuyến Đường");
         coladress.setCellValueFactory(new PropertyValueFactory("tuyenduong_id"));
         /////// add nút
-//        TableColumn colBtn = new TableColumn();
-//        colBtn.setCellFactory(evt -> {
-//
-//            Button btnXoa = new Button("Xóa");
-//            btnXoa.setOnAction(e -> {
-//                // Xuử lí Huy Ve
-//                Alert xacnhanXoaCx = MessageBox.getBox("Xóa Tuyến Đường", "Bạn Có Chắc muốn xóa", Alert.AlertType.CONFIRMATION);
-//                xacnhanXoaCx.showAndWait().ifPresent(respon -> {
-//                    if (respon == ButtonType.OK) {
-//                        Button b = (Button) e.getSource();
-//                        TableCell cellv = (TableCell) b.getParent();
-//                        TuyenDuong v = (TuyenDuong) cellv.getTableRow().getItem();
-//
-//                        try {
-//                            if (tds.deleteTuyenduong(v.getId())) {
-//                                MessageBox.getBox("Xóa Tuyến Đường", "Thành Công", Alert.AlertType.INFORMATION).show();
-//                                this.loadTableData(null);
-//                            } else {
-//                                MessageBox.getBox("Xóa Tuyến Đường", "Faild", Alert.AlertType.INFORMATION).show();
-//                            }
-//                        } catch (SQLException ex) {
-//
-//                            Logger.getLogger(FXMLTimVeController.class.getName()).log(Level.SEVERE, null, ex);
-//                        }
-//                    }
-//                });
-//            });
-//            TableCell cell = new TableCell();
-//            cell.setGraphic(btnXoa);
-//            return cell;
-//        });
-//
-//        TableColumn colBtn2 = new TableColumn();
-//        colBtn2.setCellFactory(evt -> {
-//            Button btnDoiVe = new Button("Cập nhật!!!!");
-//            btnDoiVe.setOnAction(e -> {
-//                Alert xacNhanDoiVe = MessageBox.getBox("Cập nhật !!!!", "BẠN CÓ CHẮC MUỐN Cập nhật Xóa Tuyến Đường NÀY ", Alert.AlertType.CONFIRMATION);
-//                xacNhanDoiVe.showAndWait().ifPresent(respon -> {
-//                    if (respon == ButtonType.OK) {
-//
-//                        Button b = (Button) e.getSource();
-//                        TableCell cellv = (TableCell) b.getParent();
-//                        TuyenDuong v = (TuyenDuong) cellv.getTableRow().getItem();
-//
-//                        TuyenDuong addbx = new TuyenDuong(v.getId(), this.txtDiemDi.getText(), this.txtDiemDen.getText());
-//                        try {
-//                            if (tds.updateTuyenDuong(addbx)) {
-//                                MessageBox.getBox("Trạng Thái", "Thành Công", Alert.AlertType.INFORMATION).show();
-//                                this.loadTableData(null);
-//                            } else {
-//                                MessageBox.getBox("Trạng Thái", "Faild", Alert.AlertType.INFORMATION).show();
-//                                this.loadTableData(null);
-//                            }
-//                        } catch (SQLException ex) {
-//
-//                            Logger.getLogger(FXMLAdminController.class.getName()).log(Level.SEVERE, null, ex);
-//                            MessageBox.getBox("Trạng Thái", "Faild", Alert.AlertType.INFORMATION).show();
-//                        }
-//
-//                    }
-//                });
-//            });
-//            TableCell cell = new TableCell();
-//            cell.setGraphic(btnDoiVe);
-//            return cell;
-//        });
-        this.tbvcx_td.getColumns().addAll(colName, coladress); // sửa đổi tên của TableView ở đây
+        TableColumn colBtn = new TableColumn();
+        colBtn.setCellFactory(evt -> {
+
+            Button btnXoa = new Button("Xóa");
+            btnXoa.setOnAction(e -> {
+                // Xuử lí Huy Ve
+                Alert xacnhanXoaCx = MessageBox.getBox("Xóa ChuyenXeTuyenDuong", "Bạn Có Chắc muốn xóa", Alert.AlertType.CONFIRMATION);
+                xacnhanXoaCx.showAndWait().ifPresent(respon -> {
+                    if (respon == ButtonType.OK) {
+                        Button b = (Button) e.getSource();
+                        TableCell cellv = (TableCell) b.getParent();
+                        ChuyenXeThuocTuyenDuong v = (ChuyenXeThuocTuyenDuong) cellv.getTableRow().getItem();
+
+                        try {
+                            if (cxtds.deleteChuyenXeTuyenDuong(v.getId())) {
+                                MessageBox.getBox("Xóa Tuyến Đường", "Thành Công", Alert.AlertType.INFORMATION).show();
+                                this.loadTableData(null);
+                            } else {
+                                MessageBox.getBox("Xóa Tuyến Đường", "Faild", Alert.AlertType.INFORMATION).show();
+                            }
+                        } catch (SQLException ex) {
+
+                            Logger.getLogger(FXMLTimVeController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                });
+            });
+            TableCell cell = new TableCell();
+            cell.setGraphic(btnXoa);
+            return cell;
+        });
+
+        TableColumn colBtn2 = new TableColumn();
+        colBtn2.setCellFactory(evt -> {
+            Button btnDoiVe = new Button("Cập nhật!!!!");
+            btnDoiVe.setOnAction(e -> {
+                Alert xacNhanDoiVe = MessageBox.getBox("Cập nhật !!!!", "BẠN CÓ CHẮC MUỐN Cập nhật Xóa Tuyến Đường NÀY ", Alert.AlertType.CONFIRMATION);
+                xacNhanDoiVe.showAndWait().ifPresent(respon -> {
+                    if (respon == ButtonType.OK) {
+
+                        Button b = (Button) e.getSource();
+                        TableCell cellv = (TableCell) b.getParent();
+                        TuyenDuong v = (TuyenDuong) cellv.getTableRow().getItem();
+
+                        ChuyenXeThuocTuyenDuong addbx = new ChuyenXeThuocTuyenDuong(v.getId(),this.cbBox1.getSelectionModel().getSelectedItem().getId(),  this.cbBox2.getSelectionModel().getSelectedItem().getId());
+                        try {
+                            if (cxtds.updateChuyenXeTuyenDuong(addbx)) {
+                                MessageBox.getBox("Trạng Thái", "Thành Công", Alert.AlertType.INFORMATION).show();
+                                this.loadTableData(null);
+                            } else {
+                                MessageBox.getBox("Trạng Thái", "Faild", Alert.AlertType.INFORMATION).show();
+                                this.loadTableData(null);
+                            }
+                        } catch (SQLException ex) {
+
+                            Logger.getLogger(FXMLAdminController.class.getName()).log(Level.SEVERE, null, ex);
+                            MessageBox.getBox("Trạng Thái", "Faild", Alert.AlertType.INFORMATION).show();
+                        }
+
+                    }
+                });
+            });
+            TableCell cell = new TableCell();
+            cell.setGraphic(btnDoiVe);
+            return cell;
+        });
+        this.tbvcx_td.getColumns().addAll(colName, coladress,colBtn,colBtn2); // sửa đổi tên của TableView ở đây
     }
 
     private void loadTableData(String kw) throws SQLException {
       
-        List<ChuyenXeThuocTuyenDuong>listcxtd = cxtds.getChuyenXeTuyenDuong();
+        List<ChuyenXeThuocTuyenDuong>listcxtd = cxtds.getCXTuyenDuong(kw);
         this.tbvcx_td.getItems().clear();
         this.tbvcx_td.setItems(FXCollections.observableList(listcxtd));
+    }
+     public void addCXTDhandler() throws SQLException {
+
+        btnThem.setOnAction(e -> {
+      
+            // Xuử lí Huy Ve
+            Alert xacnhanXoaCx = MessageBox.getBox("Thêm Xe Khach", "Bạn Có Chắc muốn Them Những thông tin hiện tại", Alert.AlertType.CONFIRMATION);
+            xacnhanXoaCx.showAndWait().ifPresent(respon -> {
+                if (respon == ButtonType.OK) {
+                   
+                      ChuyenXeThuocTuyenDuong addbx = new ChuyenXeThuocTuyenDuong(this.cbBox1.getSelectionModel().getSelectedItem().getId(),  this.cbBox2.getSelectionModel().getSelectedItem().getId());
+                    try {
+                        if (cxtds.insertChuyenXeThuocTuyenDuong(addbx)) {
+                            MessageBox.getBox("Trạng Thái", "Thành Công", Alert.AlertType.INFORMATION).show();
+                            this.loadTableData(null);
+                        } else {
+                            MessageBox.getBox("Trạng Thái", "Faild", Alert.AlertType.INFORMATION).show();
+                            this.loadTableData(null);
+                        }
+
+                    } catch (SQLException ex) {
+                        MessageBox.getBox("Trạng Thái", "Faild", Alert.AlertType.INFORMATION).show();
+                        Logger.getLogger(FXMLTimVeController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            });
+        });
     }
 }
