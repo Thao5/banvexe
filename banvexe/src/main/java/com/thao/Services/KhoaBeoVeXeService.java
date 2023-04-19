@@ -136,7 +136,7 @@ public boolean updateVe(String tenGhe, String chuyenxe, String id) throws SQLExc
             stml.setString(1, ve.getId());
             stml.setString(2, ve.getSoghe());
             stml.setDouble(3, ve.getGiave());
-            stml.setString(4, LocalDateTime.now().toString());
+            stml.setObject(4, LocalDateTime.now());
             stml.setString(5, ve.getKhachhang());
             stml.setString(6, ve.getSdt());
             stml.setString(7, ve.getUser_id());
