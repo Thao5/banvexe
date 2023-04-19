@@ -67,6 +67,8 @@ public class FXMLTuyenDuongController implements Initializable {
             this.LoadTableColums();
             this.loadTableData(null);
             this.addTuyenDuongHandler();
+            this.autoFillInfo();
+            
             this.txtSearch.textProperty().addListener(d -> {
                 try {
 
@@ -244,31 +246,37 @@ public class FXMLTuyenDuongController implements Initializable {
         colBtn2.setCellFactory(evt -> {
             Button btnDoiVe = new Button("Cập nhật!!!!");
             btnDoiVe.setOnAction(e -> {
-                Alert xacNhanDoiVe = MessageBox.getBox("Cập nhật !!!!", "BẠN CÓ CHẮC MUỐN Cập nhật Xóa Tuyến Đường NÀY ", Alert.AlertType.CONFIRMATION);
-                xacNhanDoiVe.showAndWait().ifPresent(respon -> {
-                    if (respon == ButtonType.OK) {
+                if (checkInfoText(this.txtDiemDi.getText(), this.txtDiemDen.getText())) {
+                    Alert xacNhanDoiVe = MessageBox.getBox("Cập nhật !!!!", "BẠN CÓ CHẮC MUỐN Cập nhật Tuyến Đường NÀY ", Alert.AlertType.CONFIRMATION);
+                    xacNhanDoiVe.showAndWait().ifPresent(respon -> {
+                        if (respon == ButtonType.OK) {
 
-                        Button b = (Button) e.getSource();
-                        TableCell cellv = (TableCell) b.getParent();
-                        TuyenDuong v = (TuyenDuong) cellv.getTableRow().getItem();
+                            Button b = (Button) e.getSource();
+                            TableCell cellv = (TableCell) b.getParent();
+                            TuyenDuong v = (TuyenDuong) cellv.getTableRow().getItem();
 
-                        TuyenDuong addbx = new TuyenDuong(v.getId(), this.txtDiemDi.getText(), this.txtDiemDen.getText());
-                        try {
-                            if (tds.updateTuyenDuong(addbx)) {
-                                MessageBox.getBox("Trạng Thái", "Thành Công", Alert.AlertType.INFORMATION).show();
-                                this.loadTableData(null);
-                            } else {
+                            TuyenDuong addbx = new TuyenDuong(v.getId(), this.txtDiemDi.getText(), this.txtDiemDen.getText());
+                            try {
+                                if (tds.updateTuyenDuong(addbx)) {
+                                    MessageBox.getBox("Trạng Thái", "Thành Công", Alert.AlertType.INFORMATION).show();
+                                    this.loadTableData(null);
+                                } else {
+                                    MessageBox.getBox("Trạng Thái", "Faild", Alert.AlertType.INFORMATION).show();
+                                    this.loadTableData(null);
+                                }
+                            } catch (SQLException ex) {
+
+                                Logger.getLogger(FXMLAdminController.class.getName()).log(Level.SEVERE, null, ex);
                                 MessageBox.getBox("Trạng Thái", "Faild", Alert.AlertType.INFORMATION).show();
-                                this.loadTableData(null);
                             }
-                        } catch (SQLException ex) {
 
-                            Logger.getLogger(FXMLAdminController.class.getName()).log(Level.SEVERE, null, ex);
-                            MessageBox.getBox("Trạng Thái", "Faild", Alert.AlertType.INFORMATION).show();
                         }
+                    });
+                } else {
+                    MessageBox.getBox("Lỗi", "THÔNG TIN KHÔNG HỌP LỆ", Alert.AlertType.INFORMATION).show();
+                    this.txtDiemDen.clear();
+                }
 
-                    }
-                });
             });
             TableCell cell = new TableCell();
             cell.setGraphic(btnDoiVe);
@@ -287,9 +295,9 @@ public class FXMLTuyenDuongController implements Initializable {
     public void addTuyenDuongHandler() throws SQLException {
 
         btnThem.setOnAction(e -> {
-
-            // Xuử lí Huy Ve
-            Alert xacnhanXoaCx = MessageBox.getBox("Thêm Tuyến đường", "Bạn Có Chắc muốn Them Những thông tin hiện tại", Alert.AlertType.CONFIRMATION);
+            if(checkInfoText(this.txtDiemDi.getText(), this.txtDiemDen.getText())){
+            
+             Alert xacnhanXoaCx = MessageBox.getBox("Thêm Tuyến đường", "Bạn Có Chắc muốn Them Những thông tin hiện tại", Alert.AlertType.CONFIRMATION);
             xacnhanXoaCx.showAndWait().ifPresent(respon -> {
                 if (respon == ButtonType.OK) {
 
@@ -309,6 +317,36 @@ public class FXMLTuyenDuongController implements Initializable {
                     }
                 }
             });
+            }
+            else{
+            MessageBox.getBox("Lỗi", "THÔNG TIN KHÔNG HỌP LỆ", Alert.AlertType.INFORMATION).show();
+            this.txtDiemDen.clear();
+            }
+           
         });
     }
+    public boolean checkInfoText(String diemdi, String diemden) {
+        if (diemdi.equals(diemden)) {
+
+            return false;
+        } else {
+
+            return true;
+        }
+    }
+
+
+    public void autoFillInfo() {
+        this.tbvtd.setOnMouseClicked(e -> {
+            if (e.getClickCount() == 1) {
+                TuyenDuong selectedTD = tbvtd.getSelectionModel().getSelectedItem();
+
+                txtDiemDi.setText(selectedTD.getDiemden());
+                txtDiemDen.setText(selectedTD.getDiemden());
+            }
+        });
+
+    }
+    
+    
 }

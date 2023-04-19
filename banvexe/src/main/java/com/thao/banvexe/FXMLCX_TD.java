@@ -89,7 +89,8 @@ public class FXMLCX_TD implements Initializable{
             List<TuyenDuong> ltd = tds.getTuyenDuong();
             this.cbBox1.setItems(FXCollections.observableList(lcx));
             this.cbBox2.setItems(FXCollections.observableList(ltd));
-           
+           this.cbBox1.getSelectionModel().selectFirst();
+            this.cbBox2.getSelectionModel().selectFirst();
             this.LoadTableColums();
             this.loadTableData(null);
             this.addCXTDhandler();
@@ -275,7 +276,7 @@ public class FXMLCX_TD implements Initializable{
 
                         Button b = (Button) e.getSource();
                         TableCell cellv = (TableCell) b.getParent();
-                        TuyenDuong v = (TuyenDuong) cellv.getTableRow().getItem();
+                        ChuyenXeThuocTuyenDuong v = (ChuyenXeThuocTuyenDuong) cellv.getTableRow().getItem();
 
                         ChuyenXeThuocTuyenDuong addbx = new ChuyenXeThuocTuyenDuong(v.getId(),this.cbBox1.getSelectionModel().getSelectedItem().getId(),  this.cbBox2.getSelectionModel().getSelectedItem().getId());
                         try {

@@ -27,28 +27,23 @@
                               <TextField fx:id="txtName" />
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER" layoutX="14.0" layoutY="48.0" prefHeight="33.0" prefWidth="218.0">
-                           <children>
-                              <Label prefHeight="18.0" prefWidth="115.0" text="Số Ghế" />
-                              <TextField />
-                           </children>
-                        </HBox>
+                        <HBox alignment="CENTER" layoutX="14.0" layoutY="48.0" prefHeight="33.0" prefWidth="218.0" />
                         <HBox alignment="CENTER" layoutX="14.0" layoutY="82.0" prefHeight="33.0" prefWidth="218.0">
                            <children>
-                              <Label prefHeight="18.0" prefWidth="115.0" text="Giá Tiền" />
+                              <Label prefHeight="29.0" prefWidth="92.0" text="Giá Tiền" />
                               <TextField fx:id="txtPrice" />
                            </children>
                         </HBox>
                         <HBox alignment="CENTER" layoutX="297.0" layoutY="7.0" prefHeight="47.0" prefWidth="223.0">
                            <children>
                               <Label prefHeight="47.0" prefWidth="72.0" text="Điểm Đi" />
-                              <ComboBox fx:id="bx1" prefWidth="150.0" />
+                              <ComboBox fx:id="bx1" onAction="#CheckDiemDiDen" prefWidth="150.0" />
                            </children>
                         </HBox>
                         <HBox alignment="CENTER" layoutX="297.0" layoutY="41.0" prefHeight="47.0" prefWidth="223.0">
                            <children>
                               <Label prefHeight="47.0" prefWidth="74.0" text="Điểm  Đến" />
-                              <ComboBox fx:id="bx2" prefWidth="150.0" />
+                              <ComboBox fx:id="bx2" onAction="#CheckDiemDiDen" prefWidth="150.0" />
                            </children>
                         </HBox>
                         <HBox alignment="CENTER" layoutX="297.0" layoutY="75.0" prefHeight="47.0" prefWidth="223.0">
@@ -60,7 +55,8 @@
                         <HBox alignment="TOP_CENTER" layoutX="544.0" layoutY="17.0" prefHeight="47.0" prefWidth="238.0">
                            <children>
                               <Label prefHeight="26.0" prefWidth="120.0" text="Ngày Khởi Hành" />
-                              <DatePicker fx:id="dtPicker" />
+                              <DatePicker fx:id="dtPicker" onAction="#checkNgayHopLe" />
+                           
                            </children>
                         </HBox>
                         <Button fx:id="btnThem" layoutX="706.0" layoutY="122.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="131.0" text="Tạo Chuyến" />
@@ -72,6 +68,12 @@
                                  </font>
                               </Label>
                               <TextField fx:id="txtSearch" prefHeight="26.0" prefWidth="295.0" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" layoutX="544.0" layoutY="51.0" prefHeight="47.0" prefWidth="254.0">
+                           <children>
+                              <Label prefHeight="47.0" prefWidth="122.0" text="Giờ Khởi Hành " />
+                              <ComboBox fx:id="comboHours" prefHeight="26.0" prefWidth="139.0" />
                            </children>
                         </HBox>
                      </children>

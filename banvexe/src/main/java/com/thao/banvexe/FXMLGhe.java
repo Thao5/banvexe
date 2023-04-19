@@ -237,7 +237,24 @@ public class FXMLGhe implements Initializable {
 
         TableColumn colTrangThai = new TableColumn("trangthai");
         colTrangThai.setCellValueFactory(new PropertyValueFactory("trangthai"));
+         colTrangThai.setCellFactory(column -> {
+            return new TableCell<Ghe, Boolean>() {
+                @Override
+                protected void updateItem(Boolean item, boolean empty) {
+                    super.updateItem(item, empty);
 
+                    if (item == null || empty) {
+                        setText("");
+                    } else {
+                        if (item) {
+                            setText("Đã đặt");
+                        } else {
+                            setText("Còn trống");
+                        }
+                    }
+                }
+            };
+        });
         TableColumn colCx = new TableColumn("Xe Khách");
         colCx.setCellValueFactory(new PropertyValueFactory("xekhach_id"));
          TableColumn colBtn = new TableColumn();

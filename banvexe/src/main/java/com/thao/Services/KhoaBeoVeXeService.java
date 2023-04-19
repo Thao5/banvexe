@@ -17,6 +17,8 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.control.Alert;
 
 /**
@@ -44,7 +46,7 @@ public class KhoaBeoVeXeService {
         List<Ve> results = new ArrayList<>();
 
         try (Connection conn = DatabaseConnection.getDBConnection()) {
-            String sql = "SELECT * FROM ve WHERE DATE(ngayin) >= DATE(NOW())";
+           String sql = "SELECT * FROM ve WHERE DATE(ngayin) >= DATE_SUB(DATE(NOW()), INTERVAL 3 DAY)";
             if (kw != null && !kw.isEmpty()) {
                 sql += " AND id LIKE CONCAT('%', ?, '%')";
             }
@@ -124,9 +126,30 @@ public boolean updateVe(String tenGhe, String chuyenxe, String id) throws SQLExc
         }
         return result;
     }
-
-
-
-    
+     public Boolean InsertVe(Ve ve) throws SQLException{
+        try(Connection conn = DatabaseConnection.getDBConnection()){
+            boolean result = false;
+            conn.setAutoCommit(false);
+            String sql = "INSERT INTO VE VALUES(?,?,?,?,?,?,?,?)";
+            PreparedStatement stml = conn.prepareCall(sql);
+            
+            stml.setString(1, ve.getId());
+            stml.setString(2, ve.getSoghe());
+            stml.setDouble(3, ve.getGiave());
+            stml.setString(4, LocalDateTime.now().toString());
+            stml.setString(5, ve.getKhachhang());
+            stml.setString(6, ve.getSdt());
+            stml.setString(7, ve.getUser_id());
+            stml.setString(8, ve.getChuyenxe_id());
+            
+             int kq = stml.executeUpdate();
+            if (kq > 0) {
+                conn.commit();
+                result = true;
+            }
+            conn.commit();
+            return result;
+        }
+    }
 
 }
