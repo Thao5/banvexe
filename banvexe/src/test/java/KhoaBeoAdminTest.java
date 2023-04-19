@@ -2,12 +2,14 @@
 import com.thao.Services.DatabaseConnection;
 import com.thao.Services.KhoaBeoChuyenXeService;
 import com.thao.pojo.ChuyenXe;
+import com.thao.pojo.Ve;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -65,45 +67,81 @@ public class KhoaBeoAdminTest {
     }
 
     @ParameterizedTest
-     @DisplayName("Kiểm tra Thêm tất cả phần tử Thành ")
+    @DisplayName("Kiểm tra Thêm tất cả phần tử Thành ")
     @CsvSource({
-        "1,CX101,2023-04-19 00:00:00,450000,1,1,1",
-        "2,CX102,2023-04-19 00:00:00,350000,1,1,1",
-        "3,CX103,2023-04-19 00:00:00,250000,1,1,1",
-        "4,CX104,2023-04-19 00:00:00,150000,1,1,1"
+        "1MOTTEST,CX10166A1,2023-04-19 00:00:00,450000,1,1,1",
+        "2HAITEST,CX10266A1,2023-04-19 00:00:00,350000,1,1,1",
+        "3BATEST,CX10366A1,2023-04-19 00:00:00,250000,1,1,1",
+        "4BONTES,CX10466A1,2023-04-19 00:00:00,150000,1,1,1"
     })
-   public void testInsert(String id, String name, String ngaykhoihanhStr, double giave, String xekhach_id, String benxedi_id, String benxeden_id) throws SQLException {
+
+    public void testInsert(String id, String name, String ngaykhoihanhStr, double giave, String xekhach_id, String benxedi_id, String benxeden_id) throws SQLException {
         LocalDateTime ngaykhoihanh = LocalDateTime.parse(ngaykhoihanhStr, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         ChuyenXe chuyenXe = new ChuyenXe(id, name, ngaykhoihanh, giave, xekhach_id, benxedi_id, benxeden_id);
         boolean result = kbcx.insertCx(chuyenXe);
         Assertions.assertTrue(result);
-            PreparedStatement stm = conn.prepareCall("SELECT * FROM Chuyenxe WHERE id=?");
-            stm.setString(1, chuyenXe.getId());
-            
-            ResultSet rs = stm.executeQuery();
-            Assertions.assertNotNull(rs.next());
-            Assertions.assertEquals(chuyenXe.getName(), rs.getString("name"));
-            Assertions.assertEquals(chuyenXe.getId(), rs.getString("id"));
-    }
+        PreparedStatement stm = conn.prepareCall("SELECT * FROM Chuyenxe WHERE id=?");
+        stm.setString(1, chuyenXe.getId());
 
+        ResultSet rs = stm.executeQuery();
+        Assertions.assertNotNull(rs.next());
+        Assertions.assertEquals(chuyenXe.getName(), rs.getString("name"));
+        Assertions.assertEquals(chuyenXe.getId(), rs.getString("id"));
+    }
     @ParameterizedTest
-    @ValueSource(strings = {"1",
-        "2",
-        "3","4"})
+      @DisplayName("Kiểm tra Search THÀNH CÔNG ")
+    @ValueSource(strings = {"CX10166A1",
+        "CX10266A1",
+        "CX10366A1", 
+        "CX10466A1"})
+    public void testSearchKw(String kw) throws SQLException {
+        List<ChuyenXe> cxs = kbcx.getChuyenXe(kw);
+        Assertions.assertEquals(1, cxs.size());
+        for (ChuyenXe cx : cxs) {
+            Assertions.assertTrue(cx.getName().contains(kw));
+        }
+    }
+    @ParameterizedTest
+        @DisplayName("Kiểm tra Update tất cả phần tử Thành Công")
+    @CsvSource({
+        "1MOTTEST,CX101UPDATE,2023-04-19 00:00:00,450000,1,1,1",
+        "2HAITEST,CX102UPDATE,2023-04-19 00:00:00,350000,1,1,1",
+        "3BATEST,CX103UPDATE,2023-04-19 00:00:00,250000,1,1,1",
+        "4BONTES,CX104UPDATE,2023-04-19 00:00:00,150000,1,1,1"
+    })
+    public void testUpdate(String id, String name, String ngaykhoihanhStr, double giave, String xekhach_id, String benxedi_id, String benxeden_id) throws SQLException {
+        LocalDateTime ngaykhoihanh = LocalDateTime.parse(ngaykhoihanhStr, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        ChuyenXe chuyenXe = new ChuyenXe(id, name, ngaykhoihanh, giave, xekhach_id, benxedi_id, benxeden_id);
+        boolean actual = kbcx.updateCx(chuyenXe);
+        Assertions.assertTrue(actual);
+        PreparedStatement stm = conn.prepareCall("SELECT * FROM Chuyenxe WHERE id=?");
+        stm.setString(1, chuyenXe.getId());
+
+        ResultSet rs = stm.executeQuery();
+        Assertions.assertNotNull(rs.next());
+        Assertions.assertEquals(chuyenXe.getName(), rs.getString("name"));
+        Assertions.assertEquals(chuyenXe.getId(), rs.getString("id"));
+    }
+    
+    @ParameterizedTest
+      @DisplayName("Kiểm tra XÓA THÀNH CÔNG ")
+    @ValueSource(strings = {"1MOTTEST",
+        "2HAITEST",
+        "3BATEST", "4BONTES"})
     public void testDelete(String id) throws SQLException {
         Assertions.assertTrue(kbcx.deleteChuyenXe(id));
         PreparedStatement stm = conn.prepareCall("SELECT * FROM Chuyenxe WHERE id=?");
-            stm.setString(1, id);
-            ResultSet rs = stm.executeQuery();
-            Assertions.assertFalse(rs.next());
-            
-     
+        stm.setString(1, id);
+        ResultSet rs = stm.executeQuery();
+        Assertions.assertFalse(rs.next());
+
     }
+
     @ParameterizedTest
     @ValueSource(strings = {"Mot",
         "Hai",
-        "Ba","Bon"})
-   public void testDeleteFail(String id) throws SQLException {
+        "Ba", "Bon"})
+    public void testDeleteFail(String id) throws SQLException {
         Assertions.assertFalse(kbcx.deleteChuyenXe(id));
     }
 }

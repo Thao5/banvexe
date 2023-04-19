@@ -44,7 +44,7 @@
                               <TextField fx:id="txtSearch" prefHeight="26.0" prefWidth="295.0" />
                            </children>
                         </HBox>
-                        <Button fx:id="btnThem" layoutX="467.0" layoutY="130.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="110.0" text="Creat" />
+                        <Button fx:id="btnThem" layoutX="467.0" layoutY="130.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="110.0" text="CREATE" />
                      </children>
                   </AnchorPane>
                </content></Tab>

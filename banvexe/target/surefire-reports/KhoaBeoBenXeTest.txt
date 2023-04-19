@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
-Test set: KhoaBeoAdminTest
+Test set: KhoaBeoBenXeTest
 -------------------------------------------------------------------------------
-Tests run: 22, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.788 s - in KhoaBeoAdminTest
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.509 s - in KhoaBeoBenXeTest
