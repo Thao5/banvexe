@@ -35,28 +35,28 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
  */
 public class GheTest {
     @ParameterizedTest
-    @CsvSource({"a13, true, a9f6853c-6859-4975-9bb7-38bc096d1f94, 1"})
+    @CsvSource({"a14, true, 8ac466d2-b941-47a1-8193-8ed650b16ddf, 9f3d347b-7c22-4d85-a3b8-f95f902844d6"})
     public void testThemGheNotNull(String gheName, boolean trangThai, String veID, String xkID){
         GheServices ghes = new GheServices();
         assertEquals(ghes.themGhe(new Ghe(gheName, trangThai, veID, xkID)), 1);
     }
     
     @ParameterizedTest
-    @CsvSource({"a13, true, 8389ce52-e2dc-41e8-b581-1f9659bbce2esada, 1","a13, true, 8389ce52-e2dc-41e8-b581-1f9659bbce2e, 8"})
+    @CsvSource({"a14, true, 8ac466d2-b941-47a1-8193-8ed650b16ddf, 9f3d347b-7c22-4d85-a3b8-f95f902844d6","a14, true, 8ac466d2-b941-47a1-8193-8ed650b16ddf, 9f3d347b-7c22-4d85-a3b8-f95f902844d6"})
     public void testThemGheNull(String gheName, boolean trangThai, String veID, String xkID){
         GheServices ghes = new GheServices();
         assertEquals(ghes.themGhe(new Ghe(gheName, trangThai, veID, xkID)), 0);
     }
     
     @ParameterizedTest
-    @CsvSource({"c841da72-a052-4ba9-aef2-c40546c0b640, a13, false, a9f6853c-6859-4975-9bb7-38bc096d1f94, 1"})
+    @CsvSource({"b2320758-757d-4492-9c0a-efa396b6aefe, a15, false, 8ac466d2-b941-47a1-8193-8ed650b16ddf, 9f3d347b-7c22-4d85-a3b8-f95f902844d6"})
     public void testSuaGhe(String id, String gheName, boolean trangThai, String veID, String xkID){
         GheServices ghes = new GheServices();
         assertEquals(ghes.suaGhe(new Ghe(id,gheName, trangThai, veID, xkID)), 1);
     }
     
     @ParameterizedTest
-    @CsvSource({"c841da72-a052-4ba9-aef2-c40546c0b640"})
+    @CsvSource({"b2320758-757d-4492-9c0a-efa396b6aefe"})
     public void testXoaGhe(String id){
         GheServices ghes = new GheServices();
         assertNotEquals(ghes.xoaGhe(id), 0);

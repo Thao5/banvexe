@@ -43,6 +43,7 @@ public class ChuyenXeThuocTuyenDuongServices {
             ChuyenXeThuocTuyenDuong d = new ChuyenXeThuocTuyenDuong(cxID, tdID);
             stml.setString(1, d.getId());
             stml.setString(2, d.getChuyenxe_id());
+            stml.setString(3, d.getTuyenduong_id());
             
             return stml.executeUpdate();
         } catch (SQLException ex) {

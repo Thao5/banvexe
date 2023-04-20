@@ -69,10 +69,10 @@ public class KhoaBeoAdminTest {
     @ParameterizedTest
     @DisplayName("Kiểm tra Thêm tất cả phần tử Thành ")
     @CsvSource({
-        "1MOTTEST,CX10166A1,2023-04-19 00:00:00,450000,1,1,1",
-        "2HAITEST,CX10266A1,2023-04-19 00:00:00,350000,1,1,1",
-        "3BATEST,CX10366A1,2023-04-19 00:00:00,250000,1,1,1",
-        "4BONTES,CX10466A1,2023-04-19 00:00:00,150000,1,1,1"
+        "1MOTTEST,CX10166A1,2023-04-19 00:00:00,450000,9f3d347b-7c22-4d85-a3b8-f95f902844d6, d0a26db3-bfcc-4b32-8257-833c89fe75a7, 8a7f6cc3-5ccb-4170-84e8-ecfc2ea2b54f",
+        "2HAITEST,CX10266A1,2023-04-19 00:00:00,350000,9f3d347b-7c22-4d85-a3b8-f95f902844d6, d0a26db3-bfcc-4b32-8257-833c89fe75a7, 8a7f6cc3-5ccb-4170-84e8-ecfc2ea2b54f",
+        "3BATEST,CX10366A1,2023-04-19 00:00:00,250000,9f3d347b-7c22-4d85-a3b8-f95f902844d6, d0a26db3-bfcc-4b32-8257-833c89fe75a7, 8a7f6cc3-5ccb-4170-84e8-ecfc2ea2b54f",
+        "4BONTES,CX10466A1,2023-04-19 00:00:00,150000,9f3d347b-7c22-4d85-a3b8-f95f902844d6, d0a26db3-bfcc-4b32-8257-833c89fe75a7, 8a7f6cc3-5ccb-4170-84e8-ecfc2ea2b54f"
     })
 
     public void testInsert(String id, String name, String ngaykhoihanhStr, double giave, String xekhach_id, String benxedi_id, String benxeden_id) throws SQLException {
@@ -104,10 +104,10 @@ public class KhoaBeoAdminTest {
     @ParameterizedTest
         @DisplayName("Kiểm tra Update tất cả phần tử Thành Công")
     @CsvSource({
-        "1MOTTEST,CX101UPDATE,2023-04-19 00:00:00,450000,1,1,1",
-        "2HAITEST,CX102UPDATE,2023-04-19 00:00:00,350000,1,1,1",
-        "3BATEST,CX103UPDATE,2023-04-19 00:00:00,250000,1,1,1",
-        "4BONTES,CX104UPDATE,2023-04-19 00:00:00,150000,1,1,1"
+        "1MOTTEST,CX101UPDATE,2023-04-19 00:00:00,450000,9f3d347b-7c22-4d85-a3b8-f95f902844d6, d0a26db3-bfcc-4b32-8257-833c89fe75a7, 8a7f6cc3-5ccb-4170-84e8-ecfc2ea2b54f",
+        "2HAITEST,CX102UPDATE,2023-04-19 00:00:00,350000,9f3d347b-7c22-4d85-a3b8-f95f902844d6, d0a26db3-bfcc-4b32-8257-833c89fe75a7, 8a7f6cc3-5ccb-4170-84e8-ecfc2ea2b54f",
+        "3BATEST,CX103UPDATE,2023-04-19 00:00:00,250000,9f3d347b-7c22-4d85-a3b8-f95f902844d6, d0a26db3-bfcc-4b32-8257-833c89fe75a7, 8a7f6cc3-5ccb-4170-84e8-ecfc2ea2b54f",
+        "4BONTES,CX104UPDATE,2023-04-19 00:00:00,150000,9f3d347b-7c22-4d85-a3b8-f95f902844d6, d0a26db3-bfcc-4b32-8257-833c89fe75a7, 8a7f6cc3-5ccb-4170-84e8-ecfc2ea2b54f"
     })
     public void testUpdate(String id, String name, String ngaykhoihanhStr, double giave, String xekhach_id, String benxedi_id, String benxeden_id) throws SQLException {
         LocalDateTime ngaykhoihanh = LocalDateTime.parse(ngaykhoihanhStr, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));

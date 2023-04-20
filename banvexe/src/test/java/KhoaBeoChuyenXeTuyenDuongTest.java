@@ -73,7 +73,7 @@ public class KhoaBeoChuyenXeTuyenDuongTest {
     @Order(3)
     @DisplayName("Kiểm tra insert thành công")
     public void testInsertSuccess() throws SQLException {
-        ChuyenXeThuocTuyenDuong cxtd = new ChuyenXeThuocTuyenDuong("IDINSERT", "1MOTTEST", "2");
+        ChuyenXeThuocTuyenDuong cxtd = new ChuyenXeThuocTuyenDuong("IDINSERT", "8481cec7-433b-4432-928e-992c39a60cf6", "7eadf1ee-360e-4964-a885-50c7194178b3");
         boolean actual = kbcxtd.insertChuyenXeThuocTuyenDuong(cxtd);
         Assertions.assertTrue(actual);
         PreparedStatement stm = conn.prepareCall("SELECT * FROM chuyenxethuoctuyenduong WHERE chuyenxe_id=?");
@@ -89,7 +89,7 @@ public class KhoaBeoChuyenXeTuyenDuongTest {
     @Order(4)
     @DisplayName("Kiểm tra chức năng tìm kiếm")
     public void testSearch() throws SQLException {
-        String kw = "1MOTTEST";
+        String kw = "8481cec7-433b-4432-928e-992c39a60cf6";
         List<ChuyenXeThuocTuyenDuong> cxtds = kbcxtd.getCXTuyenDuong(kw);
         Assertions.assertEquals(1, cxtds.size());
         for (ChuyenXeThuocTuyenDuong cxtd : cxtds) {
@@ -101,7 +101,7 @@ public class KhoaBeoChuyenXeTuyenDuongTest {
     @Order(5)
     @DisplayName("Test cập nhật thông CHUYENXE TUYEN DUONG thành công")
     public void testUpdateCXTDSuccess() throws SQLException {
-        ChuyenXeThuocTuyenDuong cxtd = new ChuyenXeThuocTuyenDuong("IDINSERT", "4BONTES", "9e1f1c1e-e68c-4fa1-85c0-67a080f15ea2");
+        ChuyenXeThuocTuyenDuong cxtd = new ChuyenXeThuocTuyenDuong("IDINSERT", "8481cec7-433b-4432-928e-992c39a60cf6", "7eadf1ee-360e-4964-a885-50c7194178b3");
         boolean actual = kbcxtd.updateChuyenXeTuyenDuong(cxtd);
         Assertions.assertTrue(actual);
 

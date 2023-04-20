@@ -26,7 +26,7 @@ public class DatabaseConnection {
          }
     }
     public static Connection getDBConnection() throws SQLException{
-        return DriverManager.getConnection("jdbc:mysql://localhost/banvexe", "root", "Admin@123");
+        return DriverManager.getConnection("jdbc:mysql://localhost/banvexe", "root", "123456");
     }
     
     public static boolean createdDB(Connection conn){

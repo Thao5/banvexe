@@ -37,21 +37,21 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
  */
 public class ChuyenXeThuocTuyenDuongTest {
     @ParameterizedTest
-    @CsvSource({"a594fd4e-dc7c-40d3-8319-21ff159fd101, 4cf80ce7-9ec8-43e0-9957-15ab99089778"})
+    @CsvSource({"8481cec7-433b-4432-928e-992c39a60cf6, 7eadf1ee-360e-4964-a885-50c7194178b3"})
     public void testThemCXThuocTD(String cxID, String tdID){
         ChuyenXeThuocTuyenDuongServices cxttds = new ChuyenXeThuocTuyenDuongServices();
         assertEquals(1, cxttds.themChuyenXeThuocTuyenDuong(tdID, cxID));
     }
     
     @ParameterizedTest
-    @CsvSource({"9fbd7a81-908e-4cc9-9d66-3117b5cec8e8, a594fd4e-dc7c-40d3-8319-21ff159fd101, 4cf80ce7-9ec8-43e0-9957-15ab99089778"})
+    @CsvSource({"f7ca393f-cd35-451f-ba7c-e1124989147d, 8481cec7-433b-4432-928e-992c39a60cf6, 7eadf1ee-360e-4964-a885-50c7194178b3"})
     public void testSuaCXThuocTD(String id, String cxID, String tdID){
         ChuyenXeThuocTuyenDuongServices cxttds = new ChuyenXeThuocTuyenDuongServices();
         assertEquals(1, cxttds.suaChuyenXeThuocTuyenDuong(new ChuyenXeThuocTuyenDuong(id, cxID, tdID)));
     }
     
     @ParameterizedTest
-    @CsvSource({"9fbd7a81-908e-4cc9-9d66-3117b5cec8e8, a594fd4e-dc7c-40d3-8319-21ff159fd101, 4cf80ce7-9ec8-43e0-9957-15ab99089778"})
+    @CsvSource({"f7ca393f-cd35-451f-ba7c-e1124989147d, 8481cec7-433b-4432-928e-992c39a60cf6, 7eadf1ee-360e-4964-a885-50c7194178b3"})
     public void testXoaCXThuocTD(String id, String cxID, String tdID){
         ChuyenXeThuocTuyenDuongServices cxttds = new ChuyenXeThuocTuyenDuongServices();
         assertEquals(1, cxttds.xoaChuyenXeThuocTuyenDuong(new ChuyenXeThuocTuyenDuong(id, cxID, tdID)));

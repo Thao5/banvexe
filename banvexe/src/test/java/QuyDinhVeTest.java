@@ -30,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 public class QuyDinhVeTest {
     @DisplayName("Kiểm tra thời gian đặt vé")
     @ParameterizedTest
-    @CsvSource({"2023-04-08 07:35:19, 9, true", "2023-04-30 06:00:00, 9, true", "2023-04-30 07:00:00, 9, false"})
+    @CsvSource({"2023-04-08 07:35:19, 8481cec7-433b-4432-928e-992c39a60cf6, true", "2023-04-30 06:00:00, 8481cec7-433b-4432-928e-992c39a60cf6, false", "2023-04-30 07:00:00, 8481cec7-433b-4432-928e-992c39a60cf6, false"})
     public void testKiemTraVeDat(String ngayIn, String idCX, boolean  test){
         ChuyenXeServices cxs = new ChuyenXeServices();
         VeServices ves = new VeServices();
@@ -39,7 +39,7 @@ public class QuyDinhVeTest {
     }
     
     @ParameterizedTest
-    @CsvSource({"2023-04-30 06:30:00, 9, true", "2023-04-30 07:00:00, 9, false","2023-04-30 05:00:00, 9, true", "2023-04-30 06:31:00, 9, false"})
+    @CsvSource({"2023-04-30 06:30:00, 8481cec7-433b-4432-928e-992c39a60cf6, true", "2023-04-30 07:00:00, 8481cec7-433b-4432-928e-992c39a60cf6, false","2023-04-30 05:00:00, 8481cec7-433b-4432-928e-992c39a60cf6, true", "2023-04-30 06:31:00, 8481cec7-433b-4432-928e-992c39a60cf6, false"})
     public void testKiemTraVeDat30(String ngayIn, String idCX, boolean test){
         ChuyenXeServices cxs = new ChuyenXeServices();
         VeServices ves = new VeServices();
@@ -48,7 +48,7 @@ public class QuyDinhVeTest {
     }
     
     @ParameterizedTest
-    @CsvSource({"2023-04-30 06:55:00, 9, true", "2023-04-30 06:56:00, 9, false", "2023-04-30 07:00:00, 9, false", "2023-04-30 05:00:00, 9, true"})
+    @CsvSource({"2023-04-29 06:55:00, 8481cec7-433b-4432-928e-992c39a60cf6, true", "2023-04-30 06:56:00, 8481cec7-433b-4432-928e-992c39a60cf6, false", "2023-04-30 07:00:00, 8481cec7-433b-4432-928e-992c39a60cf6, false", "2023-04-30 05:00:00, 8481cec7-433b-4432-928e-992c39a60cf6, false"})
     public void testKiemTraVeMua(String ngayIn, String idCX, boolean test){
         ChuyenXeServices cxs = new ChuyenXeServices();
         VeServices ves = new VeServices();
@@ -57,21 +57,21 @@ public class QuyDinhVeTest {
     }
     
     @ParameterizedTest
-    @CsvSource({"a14, 9, true", "a15, 9, false"})
+    @CsvSource({"a14, 8481cec7-433b-4432-928e-992c39a60cf6, true", "a13, 8481cec7-433b-4432-928e-992c39a60cf6, false"})
     public void testIsChoTrong(String soGhe, String idCX, boolean test){
         VeServices ves = new VeServices();
         assertEquals(ves.isChoTrong(soGhe, idCX, FXMLDatVeController.listVeDaDat), test);
     }
     
     @ParameterizedTest
-    @CsvSource({"a13, 100000, 2023-04-11 14:51:00, test, 123456, 1, a594fd4e-dc7c-40d3-8319-21ff159fd101, 1", "a13, 100000, 2023-04-11 14:51:00, test, 123456, 1, 2, 0"})
+    @CsvSource({"a13, 100000, 2023-04-11 14:51:00, test, 123456, 1, 8481cec7-433b-4432-928e-992c39a60cf6, 1", "a13, 100000, 2023-04-11 14:51:00, test, 123456, 1, 2, 0"})
     public void testThemVe(String soGhe, Double giaVe, String ngayIn, String kh, String sdt, String userID, String cxID, int test){
         VeServices ves = new VeServices();
         assertEquals(ves.themVe(new Ve(soGhe, giaVe, LocalDateTime.parse(ngayIn, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), kh, sdt, userID, cxID)), test);
     }
     
     @ParameterizedTest
-    @CsvSource({"d928671a-f754-4e86-aa5b-7137b38b1b31, a12, 100000, 2023-04-11 14:51:00, test, 123456, 1, a594fd4e-dc7c-40d3-8319-21ff159fd101, 1"})
+    @CsvSource({"d928671a-f754-4e86-aa5b-7137b38b1b31, a12, 100000, 2023-04-11 14:51:00, test, 123456, 1, 8481cec7-433b-4432-928e-992c39a60cf6, 1"})
     public void testSuaVe(String id, String soGhe, Double giaVe, String ngayIn, String kh, String sdt, String userID, String cxID, int test){
         VeServices ves = new VeServices();
         assertEquals(1, ves.suaVe(new Ve(id, soGhe, giaVe, LocalDateTime.now(), kh, sdt, userID, cxID)));

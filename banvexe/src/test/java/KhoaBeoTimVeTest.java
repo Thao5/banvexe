@@ -53,7 +53,7 @@ public class KhoaBeoTimVeTest {
     @DisplayName("Kiểm tra Đàu là mã vé")
     @ValueSource(strings = {"c88efa32-d095-4111-978b-33edeffd03ee",
         "d759356a-9816-439f-a35c-d73ef5c992b6",
-        "f7b11589-0251-443f-9c10-2c6a7257335d"})
+        "8ac466d2-b941-47a1-8193-8ed650b16ddf"})
     public void TimVeSearch(String kw) throws SQLException {
         List<Ve> ves = kb.getListVe(kw);
         Assertions.assertEquals(1, ves.size());
@@ -76,11 +76,11 @@ public class KhoaBeoTimVeTest {
     @ParameterizedTest
     @DisplayName("TEST THÊM VÉ SUCCESS")
     @CsvSource({
-        "1,A101,40000,2023-04-18 00:00:00,KH1,1,1,1",
-        "2,B201,50000,2023-04-19 00:00:00,KH2,2,2,2",
-        "3,C301,35000,2023-04-20 00:00:00,KH3,1,1,1",
-        "4,D401,45000,2023-04-21 00:00:00,KH4,1,1,1",
-        "5,E501,60000,2023-04-22 00:00:00,KH5,1,1,1"
+        "1,A101,40000,2023-04-18 00:00:00,KH1,1,1,8481cec7-433b-4432-928e-992c39a60cf6",
+        "2,B201,50000,2023-04-19 00:00:00,KH2,2,1,8481cec7-433b-4432-928e-992c39a60cf6",
+        "3,C301,35000,2023-04-20 00:00:00,KH3,1,1,8481cec7-433b-4432-928e-992c39a60cf6",
+        "4,D401,45000,2023-04-21 00:00:00,KH4,1,1,8481cec7-433b-4432-928e-992c39a60cf6",
+        "5,E501,60000,2023-04-22 00:00:00,KH5,1,1,8481cec7-433b-4432-928e-992c39a60cf6"
     })
     public void InsertSuccess(String id, String soghe, Double giave, String ngayinS, String khachhang, String sdt, String user_id, String chuyenxe_id) throws SQLException {
         LocalDateTime ngayin = LocalDateTime.parse(ngayinS, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));

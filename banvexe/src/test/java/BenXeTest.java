@@ -33,7 +33,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
  */
 public class BenXeTest {
     @ParameterizedTest
-    @CsvSource({"1","2","3"})
+    @CsvSource({"85f9abf7-adec-4759-bdff-e18ba4b42875","8a7f6cc3-5ccb-4170-84e8-ecfc2ea2b54f"})
     public void testGetBenXeNotNull(String id){
         BenXeServices bxs = new BenXeServices();
         assertNotNull(bxs.getBX(id));
@@ -47,21 +47,21 @@ public class BenXeTest {
     }
     
     @ParameterizedTest
-    @CsvSource({"Thủ Dầu 1, TP.HCM, 1"})
+    @CsvSource({"Bến Tre, Bến Tre, 1"})
     public void testThemBX(String name, String address){
         BenXeServices bxs = new BenXeServices();
         assertEquals(1, bxs.themBX(new BenXe(name, address)));
     }
     
     @ParameterizedTest
-    @CsvSource({"3, test, test"})
+    @CsvSource({"85f9abf7-adec-4759-bdff-e18ba4b42875, test, test"})
     public void testSuaBX(String id, String name, String address){
         BenXeServices bxs = new BenXeServices();
         assertEquals(1, bxs.suaBX(new BenXe(id, name, address)));
     }
     
     @ParameterizedTest
-    @CsvSource({"2, TPHCM, TPHCM"})
+    @CsvSource({"e7727c6f-238f-4616-8939-bc9f149fa5ae, Bến Thành, TPHCM"})
     public void testXoaBX(String id, String name, String address){
         BenXeServices bxs = new BenXeServices();
         assertNotEquals(0, bxs.xoaBX(new BenXe(id, name, address)));

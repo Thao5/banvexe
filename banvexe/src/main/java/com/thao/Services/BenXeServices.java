@@ -125,7 +125,7 @@ public class BenXeServices {
                 count += stml.executeLargeUpdate();
             }
             
-            sql = "delete from ben where id = ?";
+            sql = "delete from benxe where id = ?";
             stml = conn.prepareCall(sql);
             stml.setString(1, bx.getId());
             count += stml.executeUpdate();

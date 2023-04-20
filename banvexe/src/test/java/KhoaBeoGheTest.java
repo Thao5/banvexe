@@ -61,7 +61,7 @@ public class KhoaBeoGheTest {
     @Order(2)
     @DisplayName("Kiểm tra Thêm Ghế thành công với id ")
     public void testInsertGheSuccess() throws SQLException {
-        Ghe g = new Ghe("A111", "GHEVODICH", false, null, "1");
+        Ghe g = new Ghe("A111", "GHEVODICH", false, null, "9f3d347b-7c22-4d85-a3b8-f95f902844d6");
         boolean actual = kbgs.insertGhe(g);
         Assertions.assertTrue(actual);
         PreparedStatement stm = conn.prepareCall("SELECT * FROM ghe WHERE id=?");
@@ -90,7 +90,7 @@ public class KhoaBeoGheTest {
     @Order(4)
     @DisplayName("Kiểm tra Cập nhật Ghế thành công với id")
     public void testUpdateGheSuccess() throws SQLException {
-        Ghe g = new Ghe("A111", "GHEVODICHuPDATE", false, null, "1");
+        Ghe g = new Ghe("A111", "GHEVODICHuPDATE", false, null, "9f3d347b-7c22-4d85-a3b8-f95f902844d6");
         boolean actual = kbgs.updateGhe(g);
         Assertions.assertTrue(actual);
         PreparedStatement stm = conn.prepareCall("SELECT * FROM ghe WHERE id=?");
@@ -107,7 +107,7 @@ public class KhoaBeoGheTest {
     @Order(5)
     @DisplayName("Kiểm tra Cập nhật Ghế thất bại với id không tồn tại")
     public void testUpdateGheFailure() throws SQLException {
-        Ghe g = new Ghe("GheKhongVodich", "GHEVODICHuPDATE", false, null, "1");
+        Ghe g = new Ghe("GheKhongVodich", "GHEVODICHuPDATE", false, null, "9f3d347b-7c22-4d85-a3b8-f95f902844d6");
         boolean actual = kbgs.updateGhe(g);
         Assertions.assertFalse(actual);
         PreparedStatement stm = conn.prepareCall("SELECT * FROM ghe WHERE id=?");
